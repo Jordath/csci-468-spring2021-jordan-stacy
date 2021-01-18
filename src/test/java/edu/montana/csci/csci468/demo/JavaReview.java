@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
+// comment to verify if the commit and push are working
+
 public class JavaReview {
 
     @Test
