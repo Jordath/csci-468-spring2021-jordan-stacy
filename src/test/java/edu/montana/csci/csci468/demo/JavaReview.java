@@ -7,15 +7,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
-// comment to verify if the commit and push are working
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JavaReview {
 
-    @Test
-    public void codingOverView() {
-        String rpnEquation = "21 22 + 1 -";
+    private Integer compute(String rpnEquation) {
         List<String> strings = Arrays.asList(rpnEquation.split("\\s+"));
-        LinkedList<Integer> stack = new LinkedList<>();
+        Deque<Integer> stack = new LinkedList<>();
         for (String string : strings) {
             if (string.equals("+")) {
                 Integer x = stack.pop();
@@ -29,7 +27,20 @@ public class JavaReview {
                 stack.push(Integer.parseInt(string));
             }
         }
-        System.out.println("Answer: " + stack.pop());
+        return stack.pop();
+    }
+
+    @Test
+    public void codingOverView() {
+        String rpnEquation = "21 22 + 1 -";
+        Integer answer = compute(rpnEquation);
+        assertEquals(42, answer);
+    }
+
+    public int showAdding() {
+        int one = 1;
+        int two = 2;
+        return one + two;
     }
 
     public static void main(String[] args) throws IOException {
