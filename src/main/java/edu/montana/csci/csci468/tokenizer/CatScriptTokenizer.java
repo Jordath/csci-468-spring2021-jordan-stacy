@@ -102,13 +102,15 @@ public class CatScriptTokenizer {
             tokenList.addToken(RIGHT_BRACE, "}", start, postion, line, lineOffset);
         }else if(matchAndConsume(',')) {
             tokenList.addToken(COMMA, ",", start, postion, line, lineOffset);
-        }else if(matchAndConsume('/')) {
+        }else if(matchAndConsume('"')) {
+                tokenList.addToken(STRING, "\"", start, postion, line, lineOffset);
+        } else if(matchAndConsume('/')) {
             if (matchAndConsume('/')) {
                 while (peek() != '\n' && !tokenizationEnd()) {
                     takeChar();
                 }
             } else {
-                tokenList.addToken(SLASH, "-", start, postion, line, lineOffset);
+                tokenList.addToken(SLASH, "/", start, postion, line, lineOffset);
             }
         } else if(matchAndConsume('=')) {
             if (matchAndConsume('=')) {
@@ -116,7 +118,27 @@ public class CatScriptTokenizer {
             } else {
                 tokenList.addToken(EQUAL, "=", start, postion, line, lineOffset);
             }
-        } else {
+
+        } else if(matchAndConsume('<')) {
+            if (matchAndConsume('=')) {
+                tokenList.addToken(LESS_EQUAL, "<=", start, postion, line, lineOffset);
+            } else {
+                tokenList.addToken(LESS, "<", start, postion, line, lineOffset);
+            }
+
+        } else if(matchAndConsume('>')) {
+            if (matchAndConsume('=')) {
+                tokenList.addToken(GREATER_EQUAL, ">=", start, postion, line, lineOffset);
+            } else {
+                tokenList.addToken(GREATER, ">", start, postion, line, lineOffset);
+            }
+
+        }else if(matchAndConsume('!')) {
+            if (matchAndConsume('=')) {
+                tokenList.addToken(BANG_EQUAL, "==", start, postion, line, lineOffset);
+            }
+
+        }else {
             tokenList.addToken(ERROR, "<Unexpected Token: [" + takeChar() + "]>", start, postion, line, lineOffset);
         }
     }
