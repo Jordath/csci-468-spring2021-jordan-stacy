@@ -40,7 +40,29 @@ public class CatScriptTokenizer {
 
     private boolean scanString() {
         // TODO implement string scanning here!
-        return false;
+        if (peek() == '"') {
+            postion++;
+            int start = postion;
+            while (peek() != '"') {
+                if (tokenizationEnd()) {
+                    tokenList.addToken(ERROR, "<Unterminated String>", start, postion, line, lineOffset);
+                    return true;
+                } else if (matchAndConsume('\\')){
+                    if(peek() == '"') {
+                        takeChar();
+                    }
+                }else {
+                    takeChar();
+
+                }
+            }
+            matchAndConsume('"');
+            tokenList.addToken(STRING, src.substring(start, postion-1), start, postion, line, lineOffset);
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     private boolean scanIdentifier() {
@@ -102,9 +124,7 @@ public class CatScriptTokenizer {
             tokenList.addToken(RIGHT_BRACE, "}", start, postion, line, lineOffset);
         }else if(matchAndConsume(',')) {
             tokenList.addToken(COMMA, ",", start, postion, line, lineOffset);
-        }else if(matchAndConsume('"')) {
-                tokenList.addToken(STRING, "\"", start, postion, line, lineOffset);
-        } else if(matchAndConsume('/')) {
+        }else if(matchAndConsume('/')) {
             if (matchAndConsume('/')) {
                 while (peek() != '\n' && !tokenizationEnd()) {
                     takeChar();
@@ -147,6 +167,7 @@ public class CatScriptTokenizer {
         // TODO update line and lineOffsets
         while (!tokenizationEnd()) {
             char c = peek();
+            //lineOffset++;
             if (c == ' ' || c == '\r' || c == '\t') {
                 postion++;
                 lineOffset++;
