@@ -70,6 +70,7 @@ public class CatScriptTokenizer {
             int start = postion;
             while (isAlphaNumeric(peek())) {
                 takeChar();
+                lineOffset++;
             }
             String value = src.substring(start, postion);
             if (KEYWORDS.containsKey(value)) {
@@ -178,6 +179,7 @@ public class CatScriptTokenizer {
                 lineOffset = 0;
                 continue;
             }
+
             break;
         }
     }
