@@ -93,6 +93,7 @@ public class CatScriptParser {
         return expression;
     }
 
+
     private Expression parseUnaryExpression() {
         if (tokens.match(MINUS, NOT)) {
             Token token = tokens.consumeToken();
@@ -112,7 +113,40 @@ public class CatScriptParser {
             IntegerLiteralExpression integerExpression = new IntegerLiteralExpression(integerToken.getStringValue());
             integerExpression.setToken(integerToken);
             return integerExpression;
-        } else {
+        }
+        else if(tokens.match(IDENTIFIER)) {
+            Token identifierToken = tokens.consumeToken();
+            IdentifierExpression identifierExpression = new IdentifierExpression(identifierToken.getStringValue());
+            identifierExpression.setToken(identifierToken);
+            return identifierExpression;
+        }
+        else if(tokens.match(STRING)) {
+            Token stringToken = tokens.consumeToken();
+            StringLiteralExpression stringLiteralExpression = new StringLiteralExpression(stringToken.getStringValue());
+            stringLiteralExpression.setToken(stringToken);
+            return stringLiteralExpression;
+        }
+
+        else if(tokens.match(TRUE)) {
+            Token trueToken = tokens.consumeToken();
+            BooleanLiteralExpression trueExpression = new BooleanLiteralExpression(true);
+            trueExpression.setToken(trueToken);
+            return trueExpression;
+        }
+        else if(tokens.match(FALSE)) {
+            Token falseToken = tokens.consumeToken();
+            BooleanLiteralExpression falseExpression = new BooleanLiteralExpression(false);
+            falseExpression.setToken(falseToken);
+            return falseExpression;
+        }
+        else if(tokens.match(NULL)) {
+            Token nullToken = tokens.consumeToken();
+            NullLiteralExpression nullExpression = new NullLiteralExpression();
+            nullExpression.setToken(nullToken);
+            return nullExpression;
+        }
+
+            else {
             SyntaxErrorExpression syntaxErrorExpression = new SyntaxErrorExpression(tokens.consumeToken());
             return syntaxErrorExpression;
         }
