@@ -182,6 +182,14 @@ public class CatScriptParser {
             return nullExpression;
         }
 
+        else if(tokens.match(LEFT_PAREN)){
+            Token startToken = tokens.consumeToken();
+            Expression expression = parseExpression();
+            boolean endParen = tokens.match(RIGHT_PAREN);
+            ParenthesizedExpression parenthesizedExpression = new ParenthesizedExpression(expression);
+            return parenthesizedExpression;
+        }
+
             else {
             SyntaxErrorExpression syntaxErrorExpression = new SyntaxErrorExpression(tokens.consumeToken());
             return syntaxErrorExpression;
