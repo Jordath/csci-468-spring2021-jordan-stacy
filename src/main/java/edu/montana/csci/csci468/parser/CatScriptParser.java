@@ -8,6 +8,7 @@ import edu.montana.csci.csci468.tokenizer.TokenList;
 import edu.montana.csci.csci468.tokenizer.TokenType;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static edu.montana.csci.csci468.tokenizer.TokenType.*;
@@ -174,11 +175,16 @@ public class CatScriptParser {
                         funcArgs.add(argument);
                     }
                 }
-                if (tokens.match(EOF)){
+                boolean unterminated = false;
+                if (!tokens.match(RIGHT_PAREN)) {
                     // throw an unterminated arg list error
-                    int i = 1;
+                     unterminated = true;
+
                 }
                 FunctionCallExpression functionCallExpression = new FunctionCallExpression(identifierToken.getStringValue(), funcArgs);
+                if(unterminated){
+                    functionCallExpression.addError(ErrorType.UNTERMINATED_ARG_LIST);
+                }
                 return functionCallExpression;
 
 
@@ -206,12 +212,16 @@ public class CatScriptParser {
                     listExpressions.add(elementExpressions);
 
                 }
-                if(tokens.match(EOF)){
+                boolean unterminated = false;
+                if(!tokens.match(RIGHT_BRACKET)){
                     // throw an unterminated list error
-                    int i = 0;
+                    unterminated = true;
                 }
                 boolean endBracket = tokens.match(RIGHT_BRACKET);
                 ListLiteralExpression listLiteralExpression = new ListLiteralExpression(listExpressions);
+                if(unterminated){
+                    listLiteralExpression.addError(ErrorType.UNTERMINATED_LIST);
+                }
                 return listLiteralExpression;
             }
         }
