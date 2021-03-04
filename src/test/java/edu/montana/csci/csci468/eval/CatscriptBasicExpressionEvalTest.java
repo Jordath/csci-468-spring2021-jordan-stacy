@@ -75,6 +75,7 @@ public class CatscriptBasicExpressionEvalTest extends CatscriptTestBase {
 
     @Test
     void parenthesizedExpressionEvaluatesProperly() {
+
         assertEquals(1, evaluateExpression("(1)"));
     }
 

@@ -196,14 +196,11 @@ public class CatScriptParser {
         else if(tokens.match(LEFT_BRACKET)){
             List<Expression> listExpressions = new ArrayList<>();
             Token startBracket = tokens.consumeToken();
-            //Expression expression = parseExpression();
-            //listExpressions.add(expression);
             if(tokens.match(RIGHT_BRACKET)){
                 ListLiteralExpression listLiteralExpression = new ListLiteralExpression(listExpressions);
                 return listLiteralExpression;
             }
             else {
-                //Token startElement = tokens.consumeToken();
                 Expression startExpression = parseExpression();
                 listExpressions.add(startExpression);
                 while (tokens.match(COMMA)) {

@@ -45,6 +45,9 @@ public class AdditiveExpression extends Expression {
             }
         }
         // TODO handle strings
+        if (getType().equals(CatscriptType.STRING)){
+            int i = 0;
+        }
     }
 
     @Override
@@ -67,21 +70,18 @@ public class AdditiveExpression extends Expression {
 
     @Override
     public Object evaluate(CatscriptRuntime runtime) {
-        Integer lhsValue = (Integer) leftHandSide.evaluate(runtime);
-        Integer rhsValue = (Integer) rightHandSide.evaluate(runtime);
-        //TODO handle string case
-        if (isAdd()) {
-            if ((getLeftHandSide().getType() == CatscriptType.STRING) || (getRightHandSide().getType() == CatscriptType.STRING)) {
-                return lhsValue.toString() + rhsValue.toString();
-            }
-
-            else {
-                return lhsValue + rhsValue;
-            }
+        if (getType() == CatscriptType.STRING){
+            return leftHandSide.evaluate(runtime).toString() + rightHandSide.evaluate(runtime).toString();
         }
-
         else {
-            return lhsValue - rhsValue;
+            Integer lhsValue = (Integer) leftHandSide.evaluate(runtime);
+            Integer rhsValue = (Integer) rightHandSide.evaluate(runtime);
+            //TODO handle string case
+            if (isAdd()) {
+                return lhsValue + rhsValue;
+            } else {
+                return lhsValue - rhsValue;
+            }
         }
     }
 
