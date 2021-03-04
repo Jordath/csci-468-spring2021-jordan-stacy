@@ -45,10 +45,6 @@ public class AdditiveExpression extends Expression {
             }
         }
         // TODO handle strings
-        if (!getType().equals(CatscriptType.INT)){
-
-            int i = 0;
-        }
     }
 
     @Override
