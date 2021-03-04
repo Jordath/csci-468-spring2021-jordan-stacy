@@ -47,7 +47,8 @@ public class ListLiteralExpression extends Expression {
 
     @Override
     public Object evaluate(CatscriptRuntime runtime) {
-        return super.evaluate(runtime);
+        return values;
+        //return super.evaluate(runtime);
     }
 
     @Override

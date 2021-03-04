@@ -71,8 +71,16 @@ public class AdditiveExpression extends Expression {
         Integer rhsValue = (Integer) rightHandSide.evaluate(runtime);
         //TODO handle string case
         if (isAdd()) {
-            return lhsValue + rhsValue;
-        } else {
+            if ((getLeftHandSide().getType() == CatscriptType.STRING) || (getRightHandSide().getType() == CatscriptType.STRING)) {
+                return lhsValue.toString() + rhsValue.toString();
+            }
+
+            else {
+                return lhsValue + rhsValue;
+            }
+        }
+
+        else {
             return lhsValue - rhsValue;
         }
     }
