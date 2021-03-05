@@ -10,11 +10,19 @@ public class CatscriptRuntime {
     HashMap<String, Object> globalScope;
 
     public CatscriptRuntime(){
+
         globalScope = new HashMap<>();
+        scopes.push(globalScope);
     }
 
     public Object getValue(String name) {
-        return globalScope.get(name);
+        Object localValue = scopes.peek().get(name);
+        if (localValue != null){
+            return localValue;
+        }
+        else {
+            return globalScope.get(name);
+        }
     }
 
     public void setValue(String variableName, Object val) {
@@ -22,9 +30,11 @@ public class CatscriptRuntime {
     }
 
     public void pushScope() {
+        scopes.push(new HashMap<>());
     }
 
     public void popScope() {
+        scopes.pop();
     }
 
 }
