@@ -7,6 +7,7 @@ import edu.montana.csci.csci468.tokenizer.Token;
 import edu.montana.csci.csci468.tokenizer.TokenList;
 import edu.montana.csci.csci468.tokenizer.TokenType;
 
+import javax.swing.plaf.nimbus.State;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -51,13 +52,32 @@ public class CatScriptParser {
     //============================================================
     //  Statements
     //============================================================
+    private Statement parseCatscriptProgram(){
+        return null;
+    }
 
     private Statement parseProgramStatement() {
         Statement printStmt = parsePrintStatement();
+        Statement varStmt = parseVariableStatement();
         if (printStmt != null) {
             return printStmt;
         }
+        else if (varStmt != null) {
+            return varStmt;
+        }
         return new SyntaxErrorStatement(tokens.consumeToken());
+    }
+
+    private Statement parseStatement(){
+        return null;
+    }
+
+    private Statement parseForStatement(){
+        return null;
+    }
+
+    private Statement parseIfStatement(){
+        return null;
     }
 
     private Statement parsePrintStatement() {
@@ -72,6 +92,60 @@ public class CatScriptParser {
 
             return printStatement;
         } else {
+            return null;
+        }
+    }
+
+    private Statement parseVariableStatement(){
+        if(tokens.match(VAR)){
+            VariableStatement variableStatement = new VariableStatement();
+            variableStatement.setStart(tokens.consumeToken());
+            String identifierString = tokens.consumeToken().getStringValue();
+
+            // TODO: optional : and type_expression
+
+            require(EQUAL,variableStatement);
+            variableStatement.setVariableName(identifierString);
+            Expression endToken = parseExpression();
+            variableStatement.setExpression(endToken);
+            variableStatement.setEnd(endToken.getEnd());
+
+            return variableStatement;
+        }
+        return null;
+    }
+
+    private Statement parseFunctionCallStatement(){
+        return parseFunctionCallStatement();
+    }
+
+    private Statement parseAssignmentStatement(){
+        return null;
+    }
+
+    private Statement parseFunctionDeclarationStatement(){
+        return null;
+    }
+
+    private Statement parseFunctionBodyStatement(){
+        return null;
+    }
+
+    private Statement parseParameterListStatement(){
+        return null;
+    }
+
+    private Statement parseParameterStatement(){
+        return null;
+    }
+
+    private Statement parseReturnStatement(){
+        if (tokens.match(RETURN)){
+            ReturnStatement returnStatement = new ReturnStatement();
+            returnStatement.setExpression(parseExpression());
+            return returnStatement;
+        }
+        else {
             return null;
         }
     }
