@@ -61,6 +61,8 @@ public class CatScriptParser {
         Statement printStmt = parsePrintStatement();
         Statement varStmt = parseVariableStatement();
         Statement forStmt = parseForStatement();
+        Statement assStmt = parseAssignmentStatement();
+        Statement ifStmt = parseIfStatement();
         if (printStmt != null) {
             return printStmt;
         }
@@ -69,6 +71,12 @@ public class CatScriptParser {
         }
         else if (forStmt != null){
             return forStmt;
+        }
+        else if (assStmt != null){
+            return assStmt;
+        }
+        else if (ifStmt != null){
+            return ifStmt;
         }
         return new SyntaxErrorStatement(tokens.consumeToken());
     }
@@ -89,7 +97,7 @@ public class CatScriptParser {
             require(RIGHT_PAREN, forStatement);
             require(LEFT_BRACE, forStatement);
             parseProgramStatement();
-            // TODO statements
+            // TO DO statements
             forStatement.setEnd(require(RIGHT_BRACE, forStatement));
             return forStatement;
         }
@@ -97,6 +105,27 @@ public class CatScriptParser {
     }
 
     private Statement parseIfStatement(){
+        if(tokens.match(IF)){
+            IfStatement ifStatement = new IfStatement();
+            ifStatement.setStart(tokens.consumeToken());
+            require(LEFT_PAREN, ifStatement);
+            parseExpression();
+            require(RIGHT_PAREN, ifStatement);
+            require(LEFT_BRACE, ifStatement);
+            parseProgramStatement();
+            require(RIGHT_BRACE, ifStatement);
+            if(tokens.match(ELSE)){
+                tokens.consumeToken();
+                if(tokens.match(IF)){
+                    parseIfStatement();
+                }
+                else {
+                    parseProgramStatement();
+                }
+            }
+            return ifStatement;
+        }
+
         return null;
     }
 
@@ -122,13 +151,16 @@ public class CatScriptParser {
             variableStatement.setStart(tokens.consumeToken());
             String identifierString = tokens.consumeToken().getStringValue();
 
-            // TODO optional : and type_expression
+            // to do optional : and type_expression
+//            if(tokens.match(COLON)){
+//
+//            }
 
             require(EQUAL,variableStatement);
             variableStatement.setVariableName(identifierString);
-            Expression endToken = parseExpression();
-            variableStatement.setExpression(endToken);
-            variableStatement.setEnd(endToken.getEnd());
+            Expression endExp = parseExpression();
+            variableStatement.setExpression(endExp);
+            variableStatement.setEnd(endExp.getEnd());
 
             return variableStatement;
         }
@@ -140,6 +172,17 @@ public class CatScriptParser {
     }
 
     private Statement parseAssignmentStatement(){
+        if(tokens.match(IDENTIFIER)){
+            AssignmentStatement assignmentStatement = new AssignmentStatement();
+            assignmentStatement.setStart(tokens.getCurrentToken());
+            String identifierString = tokens.consumeToken().getStringValue();
+            assignmentStatement.setVariableName(identifierString);
+            require(EQUAL, assignmentStatement);
+            Expression endExp = parseExpression();
+            assignmentStatement.setExpression(endExp);
+            assignmentStatement.setEnd(endExp.getEnd());
+            return assignmentStatement;
+        }
         return null;
     }
 
