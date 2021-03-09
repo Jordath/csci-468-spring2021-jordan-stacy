@@ -53,26 +53,46 @@ public class CatScriptParser {
     //  Statements
     //============================================================
     private Statement parseCatscriptProgram(){
+        Statement progStmt = parseProgramStatement();
         return null;
     }
 
     private Statement parseProgramStatement() {
         Statement printStmt = parsePrintStatement();
         Statement varStmt = parseVariableStatement();
+        Statement forStmt = parseForStatement();
         if (printStmt != null) {
             return printStmt;
         }
         else if (varStmt != null) {
             return varStmt;
         }
+        else if (forStmt != null){
+            return forStmt;
+        }
         return new SyntaxErrorStatement(tokens.consumeToken());
     }
 
     private Statement parseStatement(){
+
         return null;
     }
 
     private Statement parseForStatement(){
+        if(tokens.match(FOR)){
+            ForStatement forStatement = new ForStatement();
+            forStatement.setStart(tokens.consumeToken());
+            require(LEFT_PAREN, forStatement);
+            forStatement.setVariableName(tokens.consumeToken().getStringValue());
+            require(IN, forStatement);
+            forStatement.setExpression(parseExpression());
+            require(RIGHT_PAREN, forStatement);
+            require(LEFT_BRACE, forStatement);
+            parseProgramStatement();
+            // TODO statements
+            forStatement.setEnd(require(RIGHT_BRACE, forStatement));
+            return forStatement;
+        }
         return null;
     }
 
@@ -102,7 +122,7 @@ public class CatScriptParser {
             variableStatement.setStart(tokens.consumeToken());
             String identifierString = tokens.consumeToken().getStringValue();
 
-            // TODO: optional : and type_expression
+            // TODO optional : and type_expression
 
             require(EQUAL,variableStatement);
             variableStatement.setVariableName(identifierString);
@@ -288,7 +308,9 @@ public class CatScriptParser {
                     // throw an unterminated list error
                     unterminated = true;
                 }
-                boolean endBracket = tokens.match(RIGHT_BRACKET);
+                if(tokens.match(RIGHT_BRACKET)) {
+                    tokens.consumeToken();
+                }
                 ListLiteralExpression listLiteralExpression = new ListLiteralExpression(listExpressions);
                 if(unterminated){
                     listLiteralExpression.addError(ErrorType.UNTERMINATED_LIST);
@@ -326,6 +348,7 @@ public class CatScriptParser {
             Token startToken = tokens.consumeToken();
             Expression expression = parseExpression();
             boolean endParen = tokens.match(RIGHT_PAREN);
+            tokens.consumeToken();
             ParenthesizedExpression parenthesizedExpression = new ParenthesizedExpression(expression);
             return parenthesizedExpression;
         }
