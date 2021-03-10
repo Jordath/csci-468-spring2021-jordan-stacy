@@ -116,11 +116,17 @@ public class CatScriptParser {
             require(RIGHT_BRACE, ifStatement);
             if(tokens.match(ELSE)){
                 tokens.consumeToken();
+                require(LEFT_BRACE, ifStatement);
                 if(tokens.match(IF)){
                     parseIfStatement();
                 }
                 else {
+                    if(tokens.match(EOF)){
+                        ifStatement.addError(ErrorType.UNTERMINATED_ARG_LIST);
+                    }
                     parseProgramStatement();
+                    require(RIGHT_BRACE, ifStatement);
+
                 }
             }
             return ifStatement;
