@@ -109,9 +109,10 @@ public class CatScriptParser {
             IfStatement ifStatement = new IfStatement();
             ifStatement.setStart(tokens.consumeToken());
             require(LEFT_PAREN, ifStatement);
-            parseExpression();
+            ifStatement.setExpression(parseExpression());
             require(RIGHT_PAREN, ifStatement);
             require(LEFT_BRACE, ifStatement);
+            //ifStatement.setTrueStatements();
             parseProgramStatement();
             require(RIGHT_BRACE, ifStatement);
             if(tokens.match(ELSE)){

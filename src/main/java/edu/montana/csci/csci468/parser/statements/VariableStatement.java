@@ -53,7 +53,9 @@ public class VariableStatement extends Statement {
             if(explicitType != null){
                 type = explicitType;
                 // and verify compatibility with expression
-                type.isAssignableFrom(expression.getType());
+                if(!type.isAssignableFrom(expression.getType())){
+                    addError(ErrorType.INCOMPATIBLE_TYPES);
+                }
             }
             else {
                 type = expression.getType(); // type inference
