@@ -158,9 +158,23 @@ public class CatScriptParser {
             String identifierString = tokens.consumeToken().getStringValue();
 
             // to do optional : and type_expression
-//            if(tokens.match(COLON)){
-//
-//            }
+            if(tokens.match(COLON)){
+                tokens.consumeToken();
+                String explicitIdentifierString = tokens.consumeToken().getStringValue();
+                if(explicitIdentifierString.equals("int")) {
+                    variableStatement.setExplicitType(CatscriptType.INT);
+                }
+                else if(explicitIdentifierString.equals("bool")) {
+                    variableStatement.setExplicitType(CatscriptType.BOOLEAN);
+                }
+                else if(explicitIdentifierString.equals("string")) {
+                    variableStatement.setExplicitType(CatscriptType.STRING);
+                }
+                else if(explicitIdentifierString.equals("object")) {
+                    variableStatement.setExplicitType(CatscriptType.OBJECT);
+                }
+
+            }
 
             require(EQUAL,variableStatement);
             variableStatement.setVariableName(identifierString);
