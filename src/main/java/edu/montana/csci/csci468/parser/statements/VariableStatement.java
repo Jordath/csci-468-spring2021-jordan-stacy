@@ -50,6 +50,14 @@ public class VariableStatement extends Statement {
         } else {
             // TODO if there is an explicit type, ensure it is correct
             //      if not, infer the type from the right hand side expression
+            if(explicitType != null){
+                type = explicitType;
+                // and verify compatibility with expression
+                type.isAssignableFrom(expression.getType());
+            }
+            else {
+                type = expression.getType(); // type inference
+            }
             symbolTable.registerSymbol(variableName, type);
         }
     }

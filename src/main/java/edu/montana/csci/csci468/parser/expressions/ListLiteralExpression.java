@@ -25,17 +25,24 @@ public class ListLiteralExpression extends Expression {
 
     @Override
     public void validate(SymbolTable symbolTable) {
+        CatscriptType rollingType = CatscriptType.NULL;
         for (Expression value : values) {
             value.validate(symbolTable);
         }
         if (values.size() > 0) {
             // TODO - generalize this looking at all objects in list
             for (Expression value : values) {
-                type = CatscriptType.getListType(value.getType());
+                if (!rollingType.isAssignableFrom(value.getType())){
+                    rollingType = value.getType();
+                }
+                else {
+                    rollingType = CatscriptType.OBJECT;
+                }
+                //type = CatscriptType.getListType(value.getType());
                 //type = value.getType();
             }
 
-            //type = CatscriptType.getListType(values.get(0).getType());
+            type = CatscriptType.getListType(values.get(0).getType());
         } else {
             type = CatscriptType.getListType(CatscriptType.OBJECT);
         }
