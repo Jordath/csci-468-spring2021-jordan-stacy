@@ -40,6 +40,7 @@ public class AssignmentStatement extends Statement {
             if(!symbolType.isAssignableFrom(expression.getType())){
                 addError(ErrorType.INCOMPATIBLE_TYPES);
             }
+
         }
     }
 

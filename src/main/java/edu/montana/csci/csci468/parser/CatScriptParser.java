@@ -8,6 +8,7 @@ import edu.montana.csci.csci468.tokenizer.TokenList;
 import edu.montana.csci.csci468.tokenizer.TokenType;
 
 import javax.swing.plaf.nimbus.State;
+import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -118,6 +119,10 @@ public class CatScriptParser {
             if(tokens.match(ELSE)){
                 tokens.consumeToken();
                 require(LEFT_BRACE, ifStatement);
+                if(tokens.match(EOF)){
+                    ifStatement.addError(ErrorType.UNTERMINATED_ARG_LIST);
+                    return ifStatement;
+                }
                 if(tokens.match(IF)){
                     parseIfStatement();
                 }
@@ -130,6 +135,7 @@ public class CatScriptParser {
 
                 }
             }
+            require(RIGHT_BRACE, ifStatement);
             return ifStatement;
         }
 
