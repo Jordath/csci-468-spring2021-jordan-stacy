@@ -70,7 +70,15 @@ public class IfStatement extends Statement {
     //==============================================================
     @Override
     public void execute(CatscriptRuntime runtime) {
-        super.execute(runtime);
+        expression.evaluate(runtime);
+        if(!trueStatements.isEmpty()){
+            getTrueStatements();
+        }
+        else {
+            getElseStatements();
+        }
+
+        //super.execute(runtime);
     }
 
     @Override

@@ -199,7 +199,7 @@ public class CatScriptParser {
 
                 }
             }
-            require(RIGHT_BRACE, ifStatement);
+            //require(RIGHT_BRACE, ifStatement);
             return ifStatement;
         }
 
@@ -399,7 +399,7 @@ public class CatScriptParser {
                 tokens.consumeToken();
                 TypeLiteral functionType = parseTypeLiteral();
                 functionDefinitionStatement.setType(functionType);
-                //tokens.consumeToken();
+                tokens.consumeToken();
             }
             else {
                 TypeLiteral voidType = new TypeLiteral();
@@ -446,12 +446,14 @@ public class CatScriptParser {
     private Statement parseReturnStatement(){
         if (tokens.match(RETURN)){
             ReturnStatement returnStatement = new ReturnStatement();
-            tokens.consumeToken();
+            returnStatement.setStart(tokens.consumeToken());
             if(tokens.match(RIGHT_BRACE)){
+                returnStatement.setEnd(tokens.getCurrentToken());
                 return returnStatement;
             }
             else {
                 returnStatement.setExpression(parseExpression());
+                returnStatement.setEnd(tokens.getCurrentToken());
                 return returnStatement;
             }
         }
