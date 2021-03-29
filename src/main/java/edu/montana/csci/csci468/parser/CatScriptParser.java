@@ -256,16 +256,56 @@ public class CatScriptParser {
 
     private Statement parseAssignmentStatement(){
         if(tokens.match(IDENTIFIER)){
-
-            AssignmentStatement assignmentStatement = new AssignmentStatement();
-            assignmentStatement.setStart(tokens.getCurrentToken());
+            Token identifier = tokens.getCurrentToken();
             String identifierString = tokens.consumeToken().getStringValue();
-            assignmentStatement.setVariableName(identifierString);
-            require(EQUAL, assignmentStatement);
-            Expression endExp = parseExpression();
-            assignmentStatement.setExpression(endExp);
-            assignmentStatement.setEnd(endExp.getEnd());
-            return assignmentStatement;
+
+            if(tokens.match(LEFT_PAREN)){
+
+                List<Expression> funcArgs = new ArrayList<>();
+                Token firstParen = tokens.consumeToken();
+                if (tokens.match(RIGHT_PAREN)) {
+                    FunctionCallExpression functionCallExpression = new FunctionCallExpression(identifierString, funcArgs);
+                    FunctionCallStatement functionCallStatement = new FunctionCallStatement(functionCallExpression);
+                    return functionCallStatement;
+
+                }
+
+                else {
+                    Expression firstArg = parseExpression();
+                    funcArgs.add(firstArg);
+                    while (tokens.match(COMMA)) {
+                        tokens.consumeToken();
+                        Expression argument = parseExpression();
+                        funcArgs.add(argument);
+                    }
+                }
+                boolean unterminated = false;
+                if (!tokens.match(RIGHT_PAREN)) {
+                    // throw an unterminated arg list error
+                    unterminated = true;
+
+                }
+                FunctionCallExpression functionCallExpression = new FunctionCallExpression(identifierString,funcArgs);
+                FunctionCallStatement functionCallStatement = new FunctionCallStatement(functionCallExpression);
+                if(unterminated){
+                    functionCallExpression.addError(ErrorType.UNTERMINATED_ARG_LIST);
+                }
+                tokens.consumeToken();
+                return functionCallStatement;
+
+
+            }
+            else if(tokens.match(EQUAL)) {
+
+                AssignmentStatement assignmentStatement = new AssignmentStatement();
+                assignmentStatement.setStart(tokens.getCurrentToken());
+                assignmentStatement.setVariableName(identifierString);
+                require(EQUAL, assignmentStatement);
+                Expression endExp = parseExpression();
+                assignmentStatement.setExpression(endExp);
+                assignmentStatement.setEnd(endExp.getEnd());
+                return assignmentStatement;
+            }
         }
         return null;
         //return new SyntaxErrorStatement(tokens.consumeToken());
@@ -447,6 +487,7 @@ public class CatScriptParser {
         if (tokens.match(RETURN)){
             ReturnStatement returnStatement = new ReturnStatement();
             returnStatement.setStart(tokens.consumeToken());
+            //returnStatement.setFunctionDefinition(currentFunctionDefinition);
             if(tokens.match(RIGHT_BRACE)){
                 returnStatement.setEnd(tokens.getCurrentToken());
                 return returnStatement;
