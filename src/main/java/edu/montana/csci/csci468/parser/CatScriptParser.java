@@ -82,25 +82,6 @@ public class CatScriptParser {
         //Statement funcDec = parseFunctionDeclarationStatement();
         Statement retStmt = parseReturnStatement();
 
-
-        /*
-        if(tokens.match(PRINT)){
-            return parsePrintStatement();
-        }
-        if(tokens.match(VAR)){
-            return parseVariableStatement();
-        }
-        if(tokens.match(FOR)){
-            return parseForStatement();
-        }
-        if(tokens.match(IDENTIFIER)){
-            return parseAssignmentStatement();
-        }
-        if(tokens.match(RETURN)){
-            return parseReturnStatement();
-        }
-        */
-
         if (printStmt != null) {
             return printStmt;
         }
@@ -144,8 +125,6 @@ public class CatScriptParser {
                 }
             }
             forStatement.setBody(statements);
-            //parseProgramStatement();
-            // TO DO statements
             forStatement.setEnd(require(RIGHT_BRACE, forStatement));
             return forStatement;
         }
@@ -229,7 +208,6 @@ public class CatScriptParser {
             variableStatement.setStart(tokens.consumeToken());
             String identifierString = tokens.consumeToken().getStringValue();
 
-            // to do optional : and type_expression
             if(tokens.match(COLON)){
                 tokens.consumeToken();
                 String explicitIdentifierString = tokens.consumeToken().getStringValue();
