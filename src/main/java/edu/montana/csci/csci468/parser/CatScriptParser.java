@@ -75,34 +75,40 @@ public class CatScriptParser {
 
     private Statement parseStatement(){
         Statement printStmt = parsePrintStatement();
-        Statement varStmt = parseVariableStatement();
-        Statement forStmt = parseForStatement();
-        Statement assStmt = parseAssignmentStatement();
-        Statement ifStmt = parseIfStatement();
-        //Statement funcDec = parseFunctionDeclarationStatement();
-        Statement retStmt = parseReturnStatement();
-
         if (printStmt != null) {
             return printStmt;
         }
-        else if (varStmt != null) {
+        Statement varStmt = parseVariableStatement();
+        if (varStmt != null) {
             return varStmt;
         }
-        else if (forStmt != null){
+        Statement forStmt = parseForStatement();
+        if (forStmt != null){
             return forStmt;
         }
-        else if (ifStmt != null){
-            return ifStmt;
-        }
-        else if (assStmt != null){
+        Statement assStmt = parseAssignmentStatement();
+        if (assStmt != null){
             return assStmt;
         }
+        Statement ifStmt = parseIfStatement();
+
+        if (ifStmt != null){
+            return ifStmt;
+        }
+        //Statement funcDec = parseFunctionDeclarationStatement();
+        Statement retStmt = parseReturnStatement();
+        if (retStmt != null){
+            return retStmt;
+        }
+
+
+
+
+
 //        else if (tokens.match(FUNCTION)){
 //            return funcDec;
 //        }
-        else if (retStmt != null){
-            return retStmt;
-        }
+
 
         return null;
     }

@@ -146,16 +146,6 @@ public class FunctionDefinitionStatement extends Statement {
     //==============================================================
     @Override
     public void execute(CatscriptRuntime runtime) {
-        runtime.setValue(name,type);
-        for (String argumentName : argumentNames){
-            for (CatscriptType argumentType : argumentTypes) {
-                runtime.setValue(argumentName,argumentType);
-            }
-
-            for (Statement statement : body){
-                statement.execute(runtime);
-            }
-        }
         //super.execute(runtime);
     }
 
