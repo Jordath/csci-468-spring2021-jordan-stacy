@@ -72,12 +72,6 @@ public class IfStatement extends Statement {
     @Override
     public void execute(CatscriptRuntime runtime) {
         Object condition = expression.evaluate(runtime);
-//        for (Object value : values){
-//            runtime.setValue(variableName, value);
-//            for (Statement statement : body){
-//                statement.execute(runtime);
-//            }
-//        }
 
         if(condition.equals(true)){
             for (Statement statement : trueStatements) {
@@ -89,11 +83,6 @@ public class IfStatement extends Statement {
             for (Statement statement : elseStatements) {
                 statement.execute(runtime);
             }
-        }
-        else {
-            for (Statement statement : elseStatements) {
-            statement.execute(runtime);
-        }
         }
 
         //super.execute(runtime);
