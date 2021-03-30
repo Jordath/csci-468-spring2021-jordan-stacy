@@ -6,6 +6,7 @@ import edu.montana.csci.csci468.parser.CatscriptType;
 import edu.montana.csci.csci468.parser.ErrorType;
 import edu.montana.csci.csci468.parser.ParseError;
 import edu.montana.csci.csci468.parser.SymbolTable;
+import edu.montana.csci.csci468.parser.expressions.BooleanLiteralExpression;
 import edu.montana.csci.csci468.parser.expressions.Expression;
 
 import java.util.Collections;
@@ -70,13 +71,29 @@ public class IfStatement extends Statement {
     //==============================================================
     @Override
     public void execute(CatscriptRuntime runtime) {
-        List values = (List) expression.evaluate(runtime);
+        Object condition = expression.evaluate(runtime);
+//        for (Object value : values){
+//            runtime.setValue(variableName, value);
+//            for (Statement statement : body){
+//                statement.execute(runtime);
+//            }
+//        }
 
-        if(!trueStatements.isEmpty()){
-            getTrueStatements();
+        if(condition.equals(true)){
+            for (Statement statement : trueStatements) {
+                statement.execute(runtime);
+            }
+            //getTrueStatements();
+        }
+        else if(condition.equals(false)) {
+            for (Statement statement : elseStatements) {
+                statement.execute(runtime);
+            }
         }
         else {
-            getElseStatements();
+            for (Statement statement : elseStatements) {
+            statement.execute(runtime);
+        }
         }
 
         //super.execute(runtime);

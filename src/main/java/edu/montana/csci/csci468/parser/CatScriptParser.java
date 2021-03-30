@@ -137,7 +137,8 @@ public class CatScriptParser {
             IfStatement ifStatement = new IfStatement();
             ifStatement.setStart(tokens.consumeToken());
             require(LEFT_PAREN, ifStatement);
-            ifStatement.setExpression(parseExpression());
+            Expression parsedBool = parseExpression();
+            ifStatement.setExpression(parsedBool);
             require(RIGHT_PAREN, ifStatement);
             require(LEFT_BRACE, ifStatement);
             //ifStatement.setTrueStatements();
@@ -148,7 +149,7 @@ public class CatScriptParser {
                     break;
                 }
             }
-            ifStatement.setTrueStatements(statements);
+                ifStatement.setTrueStatements(statements);
             //parseProgramStatement();
             require(RIGHT_BRACE, ifStatement);
             if(tokens.match(ELSE)){
@@ -167,7 +168,7 @@ public class CatScriptParser {
                     }
                     List<Statement> elseStatements = new LinkedList<>();
                     while(!tokens.match(RIGHT_BRACE)){
-                        statements.add(parseStatement());
+                        elseStatements.add(parseStatement());
                         if(tokens.match(EOF)){
                             break;
                         }

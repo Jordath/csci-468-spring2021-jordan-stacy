@@ -49,6 +49,11 @@ public class AssignmentStatement extends Statement {
     //==============================================================
     @Override
     public void execute(CatscriptRuntime runtime) {
+        // x = 10
+        // x : int = 10
+        //Object evaluate = expression.evaluate(runtime);
+        runtime.setValue(variableName,expression.evaluate(runtime));
+
         super.execute(runtime);
     }
 
