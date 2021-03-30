@@ -247,6 +247,7 @@ public class CatScriptParser {
                 if (tokens.match(RIGHT_PAREN)) {
                     FunctionCallExpression functionCallExpression = new FunctionCallExpression(identifierString, funcArgs);
                     FunctionCallStatement functionCallStatement = new FunctionCallStatement(functionCallExpression);
+                    tokens.consumeToken();
                     return functionCallStatement;
 
                 }
@@ -350,10 +351,12 @@ public class CatScriptParser {
                     typeLiteral.setType(CatscriptType.getListType(CatscriptType.OBJECT));
                     return typeLiteral;
                 }
-                tokens.consumeToken();
+                require(LESS, typeLiteral);
+                //tokens.consumeToken();
                 String listType = tokens.consumeToken().getStringValue();
                 if(listType.equals("int")) {
-                    tokens.consumeToken();
+                    require(GREATER, typeLiteral);
+                    //tokens.consumeToken();
                     typeLiteral.setType(CatscriptType.getListType(CatscriptType.INT));
                     return typeLiteral;
                 }
@@ -405,7 +408,11 @@ public class CatScriptParser {
                     tokens.consumeToken();
                     TypeLiteral functionType = parseTypeLiteral();
                     currentFunctionDefinition.setType(functionType);
+                    //klsdf nsdvkj
                     tokens.consumeToken();
+                    if(!tokens.match(LEFT_BRACE)) {
+                        tokens.consumeToken();
+                    }
                 } else {
                     TypeLiteral voidType = new TypeLiteral();
                     voidType.setType(CatscriptType.VOID);
@@ -475,6 +482,9 @@ public class CatScriptParser {
             additiveExpression.setStart(expression.getStart());
             additiveExpression.setEnd(rightHandSide.getEnd());
             expression = additiveExpression;
+//            if(tokens.match(RIGHT_BRACE)){
+//                tokens.consumeToken();
+//            }
         }
         return expression;
     }
