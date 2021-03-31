@@ -578,6 +578,8 @@ public class CatScriptParser {
             Token identifierToken = tokens.consumeToken();
 
             if(tokens.match(LEFT_PAREN)) {
+                //iosdvnv dsovi; ncjvkvc
+                //tokens.consumeToken();
                 return parseFunctionCall(identifierToken);
             }
 
@@ -681,6 +683,10 @@ public class CatScriptParser {
             // throw an unterminated arg list error
             unterminated = true;
 
+        }
+        // dsajknvckn;dsvn
+        if(!tokens.match(EOF)) {
+            tokens.consumeToken();
         }
         FunctionCallExpression functionCallExpression = new FunctionCallExpression(functionName.getStringValue(), funcArgs);
         if(unterminated){
