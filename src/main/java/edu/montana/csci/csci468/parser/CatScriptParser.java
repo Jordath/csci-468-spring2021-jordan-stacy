@@ -330,19 +330,27 @@ public class CatScriptParser {
             String stringVal = currentToken.getStringValue();
             TypeLiteral typeLiteral = new TypeLiteral();
             if(stringVal.equals("int")){
+                typeLiteral.setToken(currentToken);
                 typeLiteral.setType(CatscriptType.INT);
+                tokens.consumeToken();
                 return typeLiteral;
             }
             else if(stringVal.equals("string")){
+                typeLiteral.setToken(currentToken);
                 typeLiteral.setType(CatscriptType.STRING);
+                tokens.consumeToken();
                 return typeLiteral;
             }
             else if(stringVal.equals("bool")){
+                typeLiteral.setToken(currentToken);
                 typeLiteral.setType(CatscriptType.BOOLEAN);
+                tokens.consumeToken();
                 return typeLiteral;
             }
             else if(stringVal.equals("object")){
+                typeLiteral.setToken(currentToken);
                 typeLiteral.setType(CatscriptType.OBJECT);
+                tokens.consumeToken();
                 return typeLiteral;
             }
             else if(stringVal.equals("list")){
@@ -351,6 +359,18 @@ public class CatScriptParser {
                     typeLiteral.setType(CatscriptType.getListType(CatscriptType.OBJECT));
                     return typeLiteral;
                 }
+                if(tokens.match(LESS)){
+                    tokens.consumeToken();
+                    TypeLiteral componentTypeLiteral = parseTypeLiteral();
+                    CatscriptType componentType = componentTypeLiteral.getType();
+
+
+                    componentTypeLiteral.setType(CatscriptType.getListType(componentType));
+                    //parseTypeLiteral();
+                    require(GREATER, componentTypeLiteral);
+                    return componentTypeLiteral;
+                }
+                /*
                 require(LESS, typeLiteral);
                 //tokens.consumeToken();
                 String listType = tokens.consumeToken().getStringValue();
@@ -365,6 +385,8 @@ public class CatScriptParser {
                     typeLiteral.setType(CatscriptType.getListType(CatscriptType.INT));
                     return typeLiteral;
                 }
+
+                 */
             }
 
         }
@@ -391,17 +413,23 @@ public class CatScriptParser {
                             tokens.consumeToken();
                             TypeLiteral paramType = parseTypeLiteral();
                             currentFunctionDefinition.addParameter(paramToken.getStringValue(), paramType);
-                            tokens.consumeToken();
+                            if(tokens.match(COMMA)) {
+                                tokens.consumeToken();
+                            }
                         } else {
                             TypeLiteral objectType = new TypeLiteral();
                             objectType.setType(CatscriptType.OBJECT);
                             currentFunctionDefinition.addParameter(paramToken.getStringValue(), objectType);
+                            if (tokens.match(COMMA)) {
+                                tokens.consumeToken();
+                            }
                         }
 
                     }
-                    if (!tokens.match(RIGHT_PAREN)) {
-                        tokens.consumeToken();
-                    }
+
+//                    if (!tokens.match(RIGHT_PAREN)) {
+//                        tokens.consumeToken();
+//                    }
                 }
                 require(RIGHT_PAREN, currentFunctionDefinition);
                 if (tokens.match(COLON)) {
@@ -409,10 +437,10 @@ public class CatScriptParser {
                     TypeLiteral functionType = parseTypeLiteral();
                     currentFunctionDefinition.setType(functionType);
                     //klsdf nsdvkj
-                    tokens.consumeToken();
-                    if(!tokens.match(LEFT_BRACE)) {
-                        tokens.consumeToken();
-                    }
+//                    tokens.consumeToken();
+//                    if(!tokens.match(LEFT_BRACE)) {
+//                        tokens.consumeToken();
+//                    }
                 } else {
                     TypeLiteral voidType = new TypeLiteral();
                     voidType.setType(CatscriptType.VOID);
