@@ -1,32 +1,38 @@
 package edu.montana.csci.csci468.eval;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map;
 
 // TODO - implement proper scoping
 public class CatscriptRuntime {
     LinkedList<Map<String, Object>> scopes = new LinkedList<>();
-    HashMap<String, Object> globalScope;
 
     public CatscriptRuntime(){
-
-        globalScope = new HashMap<>();
+        HashMap<String, Object> globalScope = new HashMap<>();
         scopes.push(globalScope);
     }
 
     public Object getValue(String name) {
-        Object localValue = scopes.peek().get(name);
-        if (localValue != null){
-            return localValue;
+        Iterator<Map<String, Object>> mapIterator = scopes.descendingIterator();
+        while (mapIterator.hasNext()) {
+            Map<String, Object> scope = mapIterator.next();
+            if (scope.containsKey(name)) {
+                return scope.get(name);
+            }
         }
-        else {
-            return globalScope.get(name);
-        }
+        return null;
     }
 
     public void setValue(String variableName, Object val) {
-        globalScope.put(variableName, val);
+        for (Map<String, Object> scope : scopes) {
+            if (scope.containsKey(variableName)) {
+                scope.put(variableName, val);
+                return;
+            }
+        }
+        scopes.peekLast().put(variableName, val);
     }
 
     public void pushScope() {
