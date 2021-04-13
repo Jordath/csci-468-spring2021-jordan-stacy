@@ -107,8 +107,14 @@ public class AdditiveExpression extends Expression {
         getLeftHandSide().compile(code);
         getRightHandSide().compile(code);
         if (isAdd()) {
-            code.addInstruction(Opcodes.IADD);
-        } else {
+            if((leftHandSide.getType() == CatscriptType.INT) && (rightHandSide.getType() == CatscriptType.INT)) {
+                code.addInstruction(Opcodes.IADD);
+            }
+            else {
+                code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, ByteCodeGenerator.internalNameFor(String.class), "concat",
+                        "(Ljava/lang/String;)Ljava/lang/String;");
+            }
+        } else{
             code.addInstruction(Opcodes.ISUB);
         }
     }
