@@ -6,6 +6,7 @@ import edu.montana.csci.csci468.parser.CatscriptType;
 import edu.montana.csci.csci468.parser.ErrorType;
 import edu.montana.csci.csci468.parser.ParseError;
 import edu.montana.csci.csci468.parser.SymbolTable;
+import org.objectweb.asm.Opcodes;
 
 public class IdentifierExpression extends Expression {
     private final String name;
@@ -51,7 +52,11 @@ public class IdentifierExpression extends Expression {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        super.compile(code);
+        code.addFieldInstruction(Opcodes.PUTFIELD, name, "L" + ByteCodeGenerator.internalNameFor(getType().getJavaType()) + ";",
+                code.getProgramInternalName());
+
+        // If not a field, set just regular variable
+        //super.compile(code);
     }
 
 

@@ -6,6 +6,7 @@ import edu.montana.csci.csci468.parser.CatscriptType;
 import edu.montana.csci.csci468.parser.SymbolTable;
 import edu.montana.csci.csci468.tokenizer.Token;
 import edu.montana.csci.csci468.tokenizer.TokenType;
+import org.objectweb.asm.Opcodes;
 
 public class EqualityExpression extends Expression {
 
@@ -70,7 +71,11 @@ public class EqualityExpression extends Expression {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        super.compile(code);
+        getLeftHandSide().compile(code);
+        getRightHandSide().compile(code);
+        code.addInstruction(Opcodes.IF_ICMPNE);
+
+        //super.compile(code);
     }
 
 

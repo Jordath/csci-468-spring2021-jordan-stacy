@@ -7,6 +7,7 @@ import edu.montana.csci.csci468.parser.ErrorType;
 import edu.montana.csci.csci468.parser.ParseError;
 import edu.montana.csci.csci468.parser.SymbolTable;
 import edu.montana.csci.csci468.parser.expressions.Expression;
+import org.objectweb.asm.Opcodes;
 
 public class VariableStatement extends Statement {
     private Expression expression;
@@ -85,6 +86,9 @@ public class VariableStatement extends Statement {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        super.compile(code);
+        Integer localStorageSlotFor = code.createLocalStorageSlotFor(variableName);
+        code.addVarInstruction(Opcodes.ISTORE, localStorageSlotFor);
+
+        //super.compile(code);
     }
 }

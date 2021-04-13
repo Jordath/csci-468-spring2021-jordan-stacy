@@ -87,6 +87,7 @@ public class UnaryExpression extends Expression {
             code.addInstruction(Opcodes.INEG);
         }
         if(this.isNot()){
+
             code.addInstruction(Opcodes.INEG);
         }
         //super.compile(code);

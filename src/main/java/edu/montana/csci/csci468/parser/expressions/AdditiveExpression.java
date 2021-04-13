@@ -113,6 +113,7 @@ public class AdditiveExpression extends Expression {
             else {
                 code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, ByteCodeGenerator.internalNameFor(String.class), "concat",
                         "(Ljava/lang/String;)Ljava/lang/String;");
+                //code.addInstruction(Opcodes.ASTORE);
             }
         } else{
             code.addInstruction(Opcodes.ISUB);
