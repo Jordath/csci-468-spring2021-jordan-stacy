@@ -23,19 +23,48 @@ public class Scratch {
 //        if(t == u){
 //            System.out.println("true");
 //        }
-        String s = "1".concat("a");
-        //less(1,2);
-        inv(true);
+//        String s = "1".concat("a");
+//        //less(1,2);
+//        inv(true);
+//        greater(2,1);
+        //notEqual(1,2);
+//        equality(1, 1);
+        print(1);
+        //boolean x;
+        //x = null == null;
 
 
+    }
+    boolean neq(boolean i , boolean j){
+        return i == j;
     }
 
     boolean less(int i, int j){
         return i < j;
     }
 
+    void print(Object i){
+        System.out.println(i);
+    }
+
     boolean greater(int i, int j){
         return i > j;
+    }
+
+    boolean greaterEq(int i, int j){
+        return i >= j;
+    }
+
+    boolean lessEq(int i, int j){
+        return i <= j;
+    }
+
+    boolean equality(int i, int j){
+        return i == j;
+    }
+
+    boolean notEqual(int i, int j){
+        return i != j;
     }
 
 

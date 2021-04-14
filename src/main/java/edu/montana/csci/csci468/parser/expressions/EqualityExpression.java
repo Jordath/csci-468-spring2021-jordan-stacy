@@ -6,6 +6,7 @@ import edu.montana.csci.csci468.parser.CatscriptType;
 import edu.montana.csci.csci468.parser.SymbolTable;
 import edu.montana.csci.csci468.tokenizer.Token;
 import edu.montana.csci.csci468.tokenizer.TokenType;
+import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
 
 public class EqualityExpression extends Expression {
@@ -71,9 +72,38 @@ public class EqualityExpression extends Expression {
 
     @Override
     public void compile(ByteCodeGenerator code) {
+        Label L1 = new Label();
+        Label L2 = new Label();
         getLeftHandSide().compile(code);
         getRightHandSide().compile(code);
-        code.addInstruction(Opcodes.IF_ICMPNE);
+        if (isEqual()) {
+            //if(leftHandSide.getType() == CatscriptType.INT && rightHandSide.getType() == CatscriptType.INT) {
+                code.addJumpInstruction(Opcodes.IF_ICMPNE, L1);
+                code.addInstruction(Opcodes.ICONST_1);
+                code.addJumpInstruction(Opcodes.GOTO, L2);
+                code.addLabel(L1);
+                code.addInstruction(Opcodes.ICONST_0);
+                code.addLabel(L2);
+            //}
+//            else if (leftHandSide.getType() == CatscriptType.NULL || rightHandSide.getType() == CatscriptType.NULL){
+//                code.addJumpInstruction(Opcodes.IFNONNULL, L1);
+//                code.addInstruction(Opcodes.ICONST_1);
+//                code.addJumpInstruction(Opcodes.GOTO, L2);
+//                code.addLabel(L1);
+//                code.addInstruction(Opcodes.ICONST_0);
+//                code.addLabel(L2);
+//
+//            }
+        }
+        if(!isEqual()){
+            code.addJumpInstruction(Opcodes.IF_ICMPEQ, L1);
+            code.addInstruction(Opcodes.ICONST_1);
+            code.addJumpInstruction(Opcodes.GOTO, L2);
+            code.addLabel(L1);
+            code.addInstruction(Opcodes.ICONST_0);
+            code.addLabel(L2);
+
+        }
 
         //super.compile(code);
     }

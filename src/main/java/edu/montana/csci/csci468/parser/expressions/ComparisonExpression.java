@@ -7,6 +7,7 @@ import edu.montana.csci.csci468.parser.ErrorType;
 import edu.montana.csci.csci468.parser.ParseError;
 import edu.montana.csci.csci468.parser.SymbolTable;
 import edu.montana.csci.csci468.tokenizer.Token;
+import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
 
 import static edu.montana.csci.csci468.tokenizer.TokenType.*;
@@ -99,14 +100,37 @@ public class ComparisonExpression extends Expression {
     public void compile(ByteCodeGenerator code) {
         getLeftHandSide().compile(code);
         getRightHandSide().compile(code);
+        Label L1 = new Label();
+        Label L2 = new Label();
         if (isGreater()) {
-            code.addInstruction(Opcodes.IFGT);
+            code.addJumpInstruction(Opcodes.IF_ICMPLE, L1);
+            code.addInstruction(Opcodes.ICONST_1);
+            code.addJumpInstruction(Opcodes.GOTO, L2);
+            code.addLabel(L1);
+            code.addInstruction(Opcodes.ICONST_0);
+            code.addLabel(L2);
         } if (isGreaterThanOrEqual()) {
-            code.addInstruction(Opcodes.IFGE);
+            code.addJumpInstruction(Opcodes.IF_ICMPLT, L1);
+            code.addInstruction(Opcodes.ICONST_1);
+            code.addJumpInstruction(Opcodes.GOTO, L2);
+            code.addLabel(L1);
+            code.addInstruction(Opcodes.ICONST_0);
+            code.addLabel(L2);
         } if (isLessThan()) {
-            code.addInstruction(Opcodes.IFLT);
+            code.addJumpInstruction(Opcodes.IF_ICMPGE, L1);
+            code.addInstruction(Opcodes.ICONST_1);
+            code.addJumpInstruction(Opcodes.GOTO, L2);
+            code.addLabel(L1);
+            code.addInstruction(Opcodes.ICONST_0);
+            code.addLabel(L2);
+
         } if (isLessThanOrEqual()) {
-            code.addInstruction(Opcodes.IFLE);
+            code.addJumpInstruction(Opcodes.IF_ICMPGT, L1);
+            code.addInstruction(Opcodes.ICONST_1);
+            code.addJumpInstruction(Opcodes.GOTO, L2);
+            code.addLabel(L1);
+            code.addInstruction(Opcodes.ICONST_0);
+            code.addLabel(L2);
         }
 
     }

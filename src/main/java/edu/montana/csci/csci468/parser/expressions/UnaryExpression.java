@@ -93,6 +93,8 @@ public class UnaryExpression extends Expression {
             code.addJumpInstruction(Opcodes.IFNE, L1);
             code.addInstruction(Opcodes.ICONST_1);
             code.addJumpInstruction(Opcodes.GOTO, L2);
+            code.addLabel(L1);
+            code.addInstruction(Opcodes.ICONST_0);
             code.addLabel(L2);
         }
         //super.compile(code);

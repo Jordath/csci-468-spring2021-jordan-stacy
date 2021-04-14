@@ -86,8 +86,15 @@ public class VariableStatement extends Statement {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        Integer localStorageSlotFor = code.createLocalStorageSlotFor(variableName);
-        code.addVarInstruction(Opcodes.ISTORE, localStorageSlotFor);
+        if(isGlobal()){
+            Integer localStorageSlotFor = code.createLocalStorageSlotFor(variableName);
+            //code.addFieldInstruction(Opcodes.ISTORE,variableName);
+
+        }
+        if(!isGlobal()) {
+            Integer localStorageSlotFor = code.createLocalStorageSlotFor(variableName);
+            code.addVarInstruction(Opcodes.ISTORE, localStorageSlotFor);
+        }
 
         //super.compile(code);
     }
