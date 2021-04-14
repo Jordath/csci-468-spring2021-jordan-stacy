@@ -23,9 +23,24 @@ public class Scratch {
 //        if(t == u){
 //            System.out.println("true");
 //        }
-        String s = "foo".concat("bar");
+        String s = "1".concat("a");
+        //less(1,2);
+        inv(true);
 
 
+    }
+
+    boolean less(int i, int j){
+        return i < j;
+    }
+
+    boolean greater(int i, int j){
+        return i > j;
+    }
+
+
+    boolean inv(boolean bool){
+        return !bool;
     }
 
 //    int add(int i) {

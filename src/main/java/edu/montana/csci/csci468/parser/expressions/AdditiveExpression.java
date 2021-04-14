@@ -111,8 +111,10 @@ public class AdditiveExpression extends Expression {
                 code.addInstruction(Opcodes.IADD);
             }
             else {
+                Integer localStorageFor = code.createLocalStorageSlotFor(leftHandSide.toString());
                 code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, ByteCodeGenerator.internalNameFor(String.class), "concat",
                         "(Ljava/lang/String;)Ljava/lang/String;");
+                code.addVarInstruction(Opcodes.ASTORE, localStorageFor);
                 //code.addInstruction(Opcodes.ASTORE);
             }
         } else{

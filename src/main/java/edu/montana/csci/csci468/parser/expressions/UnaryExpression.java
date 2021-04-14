@@ -8,6 +8,7 @@ import edu.montana.csci.csci468.parser.ParseError;
 import edu.montana.csci.csci468.parser.SymbolTable;
 import edu.montana.csci.csci468.tokenizer.Token;
 import edu.montana.csci.csci468.tokenizer.TokenType;
+import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
 
 public class UnaryExpression extends Expression {
@@ -87,8 +88,12 @@ public class UnaryExpression extends Expression {
             code.addInstruction(Opcodes.INEG);
         }
         if(this.isNot()){
-
-            code.addInstruction(Opcodes.INEG);
+            Label L1 = new Label();
+            Label L2 = new Label();
+            code.addJumpInstruction(Opcodes.IFNE, L1);
+            code.addInstruction(Opcodes.ICONST_1);
+            code.addJumpInstruction(Opcodes.GOTO, L2);
+            code.addLabel(L2);
         }
         //super.compile(code);
     }
