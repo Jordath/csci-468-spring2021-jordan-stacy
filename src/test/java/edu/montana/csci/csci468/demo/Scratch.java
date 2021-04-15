@@ -23,7 +23,12 @@ public class Scratch {
 //        if(t == u){
 //            System.out.println("true");
 //        }
-//        String s = "1".concat("a");
+        int i = 1;
+        String s1 = Integer.toString(i);
+        String s2 = Integer.toString(i);
+        String s3 = s1.concat(s2);
+        //String s2 = s1.concat("a");
+        //String s = "1".concat("a");
 //        //less(1,2);
 //        inv(true);
 //        greater(2,1);
