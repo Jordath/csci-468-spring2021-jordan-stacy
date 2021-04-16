@@ -42,18 +42,18 @@ public class PrintStatement extends Statement {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-//        code.addVarInstruction(Opcodes.ALOAD, 0);
-//        getExpression().compile(code);
-//        box(code, getExpression().getType());
-//        code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, internalNameFor(CatScriptProgram.class),
-//                "print", "(Ljava/lang/Object;)V");
+        code.addVarInstruction(Opcodes.ALOAD, 0);
+        getExpression().compile(code);
+        box(code, getExpression().getType());
+        code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, internalNameFor(CatScriptProgram.class),
+                "print", "(Ljava/lang/Object;)V");
 
-        Integer localStorageSlotFor = code.createLocalStorageSlotFor(expression.toString());
-        code.addMethodInstruction(Opcodes.GETSTATIC, ByteCodeGenerator.internalNameFor(System.class),
-                "out", "L"+ ByteCodeGenerator.internalNameFor(PrintStream.class) + ";");
-        code.addVarInstruction(Opcodes.ALOAD, localStorageSlotFor);
-        code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, ByteCodeGenerator.internalNameFor(PrintStream.class), "println",
-                "(L" + ByteCodeGenerator.internalNameFor(expression.getType().getJavaType()) +";)V");
+//        Integer localStorageSlotFor = code.createLocalStorageSlotFor(expression.toString());
+//        code.addMethodInstruction(Opcodes.GETSTATIC, ByteCodeGenerator.internalNameFor(System.class),
+//                "out", "L"+ ByteCodeGenerator.internalNameFor(PrintStream.class) + ";");
+//        code.addVarInstruction(Opcodes.ALOAD, localStorageSlotFor);
+//        code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, ByteCodeGenerator.internalNameFor(PrintStream.class), "println",
+//                "(L" + ByteCodeGenerator.internalNameFor(expression.getType().getJavaType()) +";)V");
     }
 
 }

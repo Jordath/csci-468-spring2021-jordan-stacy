@@ -105,12 +105,14 @@ public class ForStatement extends Statement {
         code.addLabel(iterationStart);
 
         code.addVarInstruction(Opcodes.ALOAD, iteratorSlot);
-        code.addMethodInstruction(Opcodes.INVOKEINTERFACE, ByteCodeGenerator.internalNameFor(Iterator.class), "hasNext", "()Z");
+        code.addMethodInstruction(Opcodes.INVOKEINTERFACE, ByteCodeGenerator.internalNameFor(Iterator.class),
+                "hasNext", "()Z");
         code.addJumpInstruction(Opcodes.IFEQ, end);
 
         CatscriptType componentType = getComponentType();
         code.addVarInstruction(Opcodes.ALOAD, iteratorSlot);
-        code.addMethodInstruction(Opcodes.INVOKEINTERFACE, ByteCodeGenerator.internalNameFor(Iterator.class), "next", "()Ljava/lang/Object;");
+        code.addMethodInstruction(Opcodes.INVOKEINTERFACE, ByteCodeGenerator.internalNameFor(Iterator.class),
+                "next", "()Ljava/lang/Object;");
         code.addTypeInstruction(Opcodes.CHECKCAST, ByteCodeGenerator.internalNameFor(componentType.getJavaType()));
         unbox(code, componentType);
 

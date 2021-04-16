@@ -9,6 +9,8 @@ import edu.montana.csci.csci468.tokenizer.TokenType;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.Opcodes;
 
+import java.util.Objects;
+
 public class EqualityExpression extends Expression {
 
     private final Token operator;
@@ -72,40 +74,25 @@ public class EqualityExpression extends Expression {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        Label L1 = new Label();
-        Label L2 = new Label();
         getLeftHandSide().compile(code);
+        box(code, getLeftHandSide().getType());
+
         getRightHandSide().compile(code);
-        if (isEqual()) {
-            //if(leftHandSide.getType() == CatscriptType.INT && rightHandSide.getType() == CatscriptType.INT) {
-                code.addJumpInstruction(Opcodes.IF_ICMPNE, L1);
-                code.addInstruction(Opcodes.ICONST_1);
-                code.addJumpInstruction(Opcodes.GOTO, L2);
-                code.addLabel(L1);
-                code.addInstruction(Opcodes.ICONST_0);
-                code.addLabel(L2);
-            //}
-//            else if (leftHandSide.getType() == CatscriptType.NULL || rightHandSide.getType() == CatscriptType.NULL){
-//                code.addJumpInstruction(Opcodes.IFNONNULL, L1);
-//                code.addInstruction(Opcodes.ICONST_1);
-//                code.addJumpInstruction(Opcodes.GOTO, L2);
-//                code.addLabel(L1);
-//                code.addInstruction(Opcodes.ICONST_0);
-//                code.addLabel(L2);
-//
-//            }
-        }
+        box(code, getRightHandSide().getType());
+
+        code.addMethodInstruction(Opcodes.INVOKESTATIC, ByteCodeGenerator.internalNameFor(Objects.class), "equals",
+                "(Ljava/lang/Object;Ljava/lang/Object;)Z");
+
         if(!isEqual()){
-            code.addJumpInstruction(Opcodes.IF_ICMPEQ, L1);
-            code.addInstruction(Opcodes.ICONST_1);
-            code.addJumpInstruction(Opcodes.GOTO, L2);
-            code.addLabel(L1);
-            code.addInstruction(Opcodes.ICONST_0);
-            code.addLabel(L2);
-
+            Label setToFalse = new Label();
+            Label end = new Label();
+            code.addJumpInstruction(Opcodes.IFNE, setToFalse);
+            code.pushConstantOntoStack(true);
+            code.addJumpInstruction(Opcodes.GOTO, end);
+            code.addLabel(setToFalse);
+            code.pushConstantOntoStack(false);
+            code.addLabel(end);
         }
-
-        //super.compile(code);
     }
 
 

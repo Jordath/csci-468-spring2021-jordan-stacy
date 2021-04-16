@@ -112,42 +112,18 @@ public class AdditiveExpression extends Expression {
                 code.addInstruction(Opcodes.IADD);
             }
             else {
-                Integer localStorageForLeft = code.createLocalStorageSlotFor(leftHandSide.toString());
-                if (leftHandSide.getType() != CatscriptType.STRING) {
-
                     getLeftHandSide().compile(code);
-                    //code.addVarInstruction(Opcodes.ILOAD, localStorageForLeft);
-                    code.addMethodInstruction(Opcodes.INVOKESTATIC, ByteCodeGenerator.internalNameFor(leftHandSide.getType().getJavaType()),
-                            "toString", "(I)Ljava/lang/String;");
-                    Integer localStorageForLeftString = code.createLocalStorageSlotFor(leftHandSide.toString());
-                    code.addVarInstruction(Opcodes.ASTORE, localStorageForLeftString);
-                }
-                if (leftHandSide.getType() == CatscriptType.STRING) {
-                    getLeftHandSide().compile(code);
-                    code.addVarInstruction(Opcodes.ALOAD, localStorageForLeft);
+                    box(code, getLeftHandSide().getType());
+                    code.addMethodInstruction(Opcodes.INVOKESTATIC, ByteCodeGenerator.internalNameFor(String.class), "valueOf",
+                            "(Ljava/lang/Object;)Ljava/lang/String;");
 
-
-                }
-                Integer localStorageForRight = code.createLocalStorageSlotFor(rightHandSide.toString());
-                if (rightHandSide.getType() != CatscriptType.STRING) {
-                    //Integer localStorageForRight = code.createLocalStorageSlotFor(rightHandSide.toString());
                     getRightHandSide().compile(code);
-                    code.addMethodInstruction(Opcodes.INVOKESTATIC, ByteCodeGenerator.internalNameFor(rightHandSide.getType().getJavaType()),
-                            "toString", "(I)Ljava/lang/String;");
-                    code.addVarInstruction(Opcodes.ASTORE, localStorageForRight);
-                }
-                if (rightHandSide.getType() == CatscriptType.STRING) {
-                    code.addVarInstruction(Opcodes.ALOAD, 2);
-                    getRightHandSide().compile(code);
+                    box(code, getRightHandSide().getType());
+                    code.addMethodInstruction(Opcodes.INVOKESTATIC, ByteCodeGenerator.internalNameFor(String.class), "valueOf",
+                            "(Ljava/lang/Object;)Ljava/lang/String;");
 
-                }
-                    Integer localStorageFor = code.createLocalStorageSlotFor("three");
-                    code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, ByteCodeGenerator.internalNameFor(String.class), "concat",
-                            "(Ljava/lang/String;)Ljava/lang/String;");
-                    code.addVarInstruction(Opcodes.ASTORE, localStorageForLeft);
-                    code.addVarInstruction(Opcodes.ALOAD, 1);
-                    //code.addInstruction(Opcodes.ICONST_1);
-
+                code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, ByteCodeGenerator.internalNameFor(String.class), "concat",
+                        "(Ljava/lang/String;)Ljava/lang/String;");
             }
         } else{
             getLeftHandSide().compile(code);

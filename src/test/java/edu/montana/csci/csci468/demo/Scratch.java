@@ -5,6 +5,7 @@ import org.apache.commons.collections.bag.SynchronizedSortedBag;
 import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.LinkedList;
+import java.util.Objects;
 
 public class Scratch {
 
@@ -23,10 +24,10 @@ public class Scratch {
 //        if(t == u){
 //            System.out.println("true");
 //        }
-        int i = 1;
-        String s1 = Integer.toString(i);
-        String s2 = Integer.toString(i);
-        String s3 = s1.concat(s2);
+//        int i = 1;
+//        String s1 = Integer.toString(i);
+//        String s2 = Integer.toString(i);
+//        String s3 = s1.concat(s2);
         //String s2 = s1.concat("a");
         //String s = "1".concat("a");
 //        //less(1,2);
@@ -34,9 +35,13 @@ public class Scratch {
 //        greater(2,1);
         //notEqual(1,2);
 //        equality(1, 1);
-        print(1);
+//        print(1);
         //boolean x;
         //x = null == null;
+        //String.valueOf(1);
+        Boolean tr = true;
+        Integer i = 1;
+        Objects.equals(tr, i);
 
 
     }

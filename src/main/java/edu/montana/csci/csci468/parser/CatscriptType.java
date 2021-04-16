@@ -1,6 +1,8 @@
 package edu.montana.csci.csci468.parser;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class CatscriptType {
@@ -32,8 +34,21 @@ public class CatscriptType {
     }
 
     // TODO memoize this call
+    static Map<CatscriptType, CatscriptType> cacheMap = new HashMap<>();
     public static CatscriptType getListType(CatscriptType type) {
-        return new ListType(type);
+        // If we hit the same type multiple times, we hit the cache
+        // and hit the already constructed type.
+        // NOT A THREAD SAFE IMPLEMENTATION
+        CatscriptType matchingType = cacheMap.get(type);
+        if(matchingType != null){
+            return matchingType;
+        }
+        else{
+            ListType listType = new ListType(type);
+            cacheMap.put(type, listType);
+            return listType;
+        }
+
     }
 
     @Override
