@@ -75,8 +75,6 @@ public class VariableStatement extends Statement {
     @Override
     public void execute(CatscriptRuntime runtime) {
         runtime.setValue(variableName,expression.evaluate(runtime));
-
-        //super.execute(runtime);
     }
 
     @Override
@@ -93,14 +91,14 @@ public class VariableStatement extends Statement {
                 code.addField(variableName, "I");
                 //code.addFieldInstruction(Opcodes.ISTORE, variableName, "I", code.getProgramInternalName());
                 code.addFieldInstruction(Opcodes.PUTFIELD, variableName, "I", code.getProgramInternalName());
-
+                code.addInstruction(Opcodes.RETURN);
             }
             else {
                 expression.compile(code);
                 code.addField(variableName, "L" + ByteCodeGenerator.internalNameFor(getType().getJavaType()) + ";");
                 code.addFieldInstruction(Opcodes.PUTFIELD, variableName, "L" + ByteCodeGenerator.internalNameFor(getType().getJavaType()) + ";"
                         , code.getProgramInternalName());
-
+                code.addInstruction(Opcodes.RETURN);
             }
 
             //box(code, type);
