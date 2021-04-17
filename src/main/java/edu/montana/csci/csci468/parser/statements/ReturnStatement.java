@@ -49,8 +49,6 @@ public class ReturnStatement extends Statement {
             value = expression.evaluate(runtime);
         }
         throw new ReturnException(value);
-        //function.execute(runtime);
-        //super.execute(runtime);
     }
 
     @Override
