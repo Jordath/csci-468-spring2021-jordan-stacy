@@ -52,8 +52,19 @@ public class IdentifierExpression extends Expression {
 
     @Override
     public void compile(ByteCodeGenerator code) {
-        code.addFieldInstruction(Opcodes.PUTFIELD, name, "L" + ByteCodeGenerator.internalNameFor(getType().getJavaType()) + ";",
-                code.getProgramInternalName());
+        Integer integer = code.resolveLocalStorageSlotFor(getName());
+        if(integer != null){
+            code.addVarInstruction(Opcodes.ILOAD, integer);
+        }
+        else {
+            if(type == CatscriptType.INT || type == CatscriptType.BOOLEAN) {
+                code.addFieldInstruction(Opcodes.GETFIELD, name, "I",
+                        code.getProgramInternalName());
+            } else{
+                code.addFieldInstruction(Opcodes.GETFIELD, name, "L" + ByteCodeGenerator.internalNameFor(getType().getJavaType()) + ";",
+                        code.getProgramInternalName());
+            }
+        }
 
         // If not a field, set just regular variable
         //super.compile(code);

@@ -87,13 +87,37 @@ public class VariableStatement extends Statement {
     @Override
     public void compile(ByteCodeGenerator code) {
         if(isGlobal()){
-            Integer localStorageSlotFor = code.createLocalStorageSlotFor(variableName);
-            //code.addFieldInstruction(Opcodes.ISTORE,variableName);
+            code.addVarInstruction(Opcodes.ALOAD, 0);
+            if(getExpression().getType() == CatscriptType.INT || getExpression().getType() == CatscriptType.BOOLEAN) {
+                expression.compile(code);
+                code.addField(variableName, "I");
+                //code.addFieldInstruction(Opcodes.ISTORE, variableName, "I", code.getProgramInternalName());
+                code.addFieldInstruction(Opcodes.PUTFIELD, variableName, "I", code.getProgramInternalName());
+
+            }
+            else {
+                expression.compile(code);
+                code.addField(variableName, "L" + ByteCodeGenerator.internalNameFor(getType().getJavaType()) + ";");
+                code.addFieldInstruction(Opcodes.PUTFIELD, variableName, "L" + ByteCodeGenerator.internalNameFor(getType().getJavaType()) + ";"
+                        , code.getProgramInternalName());
+
+            }
+
+            //box(code, type);
+
+//            expression.compile(code);
+
+            //code.addFieldInstruction(Opcodes.ISTORE, variableName, );
 
         }
         if(!isGlobal()) {
-            Integer localStorageSlotFor = code.createLocalStorageSlotFor(variableName);
-            code.addVarInstruction(Opcodes.ISTORE, localStorageSlotFor);
+            Integer localStorageSlotForVariable = code.createLocalStorageSlotFor(variableName);
+            if(getExpression().getType() == CatscriptType.INT || getExpression().getType() == CatscriptType.BOOLEAN) {
+                code.addVarInstruction(Opcodes.ISTORE, localStorageSlotForVariable);
+            }
+            else{
+                code.addVarInstruction(Opcodes.ASTORE, localStorageSlotForVariable);
+            }
         }
 
         //super.compile(code);

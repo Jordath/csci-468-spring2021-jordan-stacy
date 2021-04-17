@@ -14,6 +14,8 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
+import static edu.montana.csci.csci468.bytecode.ByteCodeGenerator.internalNameFor;
+
 public class ForStatement extends Statement {
     private Expression expression;
     private String variableName;
@@ -99,36 +101,40 @@ public class ForStatement extends Statement {
 
         // get the iterator
         expression.compile(code);
-        code.addMethodInstruction(Opcodes.INVOKEINTERFACE, ByteCodeGenerator.internalNameFor(List.class),
+        code.addMethodInstruction(Opcodes.INVOKEINTERFACE, internalNameFor(List.class),
                 "iterator", "()Ljava/util/Iterator;");
         code.addVarInstruction(Opcodes.ASTORE, iteratorSlot);
         code.addLabel(iterationStart);
 
         code.addVarInstruction(Opcodes.ALOAD, iteratorSlot);
-        code.addMethodInstruction(Opcodes.INVOKEINTERFACE, ByteCodeGenerator.internalNameFor(Iterator.class),
+        code.addMethodInstruction(Opcodes.INVOKEINTERFACE, internalNameFor(Iterator.class),
                 "hasNext", "()Z");
+
         code.addJumpInstruction(Opcodes.IFEQ, end);
 
+        // more code
         CatscriptType componentType = getComponentType();
         code.addVarInstruction(Opcodes.ALOAD, iteratorSlot);
-        code.addMethodInstruction(Opcodes.INVOKEINTERFACE, ByteCodeGenerator.internalNameFor(Iterator.class),
+        code.addMethodInstruction(Opcodes.INVOKEINTERFACE, internalNameFor(Iterator.class),
                 "next", "()Ljava/lang/Object;");
-        code.addTypeInstruction(Opcodes.CHECKCAST, ByteCodeGenerator.internalNameFor(componentType.getJavaType()));
+        code.addTypeInstruction(Opcodes.CHECKCAST, internalNameFor(componentType.getJavaType()));
         unbox(code, componentType);
 
         Integer iteratorVariableSlot = code.createLocalStorageSlotFor(variableName);
-        if(componentType.equals(CatscriptType.INT) || componentType.equals(CatscriptType.BOOLEAN)){
+        if (componentType.equals(CatscriptType.INT) || componentType.equals(CatscriptType.BOOLEAN)) {
             code.addVarInstruction(Opcodes.ISTORE, iteratorVariableSlot);
         } else {
             code.addVarInstruction(Opcodes.ASTORE, iteratorVariableSlot);
         }
 
-        for(Statement stmnt : body){
-            stmnt.compile(code);
+        for (Statement stmt : body) {
+            stmt.compile(code);
         }
 
         code.addJumpInstruction(Opcodes.GOTO, iterationStart);
         code.addLabel(end);
+
+
     }
 
 }
