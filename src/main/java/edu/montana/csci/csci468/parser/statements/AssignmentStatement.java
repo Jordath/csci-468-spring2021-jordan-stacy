@@ -54,7 +54,7 @@ public class AssignmentStatement extends Statement {
         //Object evaluate = expression.evaluate(runtime);
         runtime.setValue(variableName,expression.evaluate(runtime));
 
-        super.execute(runtime);
+        //super.execute(runtime);
     }
 
     @Override
