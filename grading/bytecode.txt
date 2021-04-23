@@ -22,7 +22,11 @@
 [INFO] skip non existing resourceDirectory /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/jordan_stacy/src/test/resources
 [INFO] 
 [INFO] --- maven-compiler-plugin:3.1:testCompile (default-testCompile) @ CSCI_466_Project ---
-[INFO] Nothing to compile - all classes are up to date
+[INFO] Changes detected - recompiling the module!
+[WARNING] File encoding has not been set, using platform encoding UTF-8, i.e. build is platform dependent!
+[INFO] Compiling 27 source files to /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/jordan_stacy/target/test-classes
+[WARNING] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/jordan_stacy/src/test/java/edu/montana/csci/csci468/CatscriptTestBase.java: Some input files use unchecked or unsafe operations.
+[WARNING] /home/carson/Projects/msu/csci-466-spring2021/grading/scripts/repos/jordan_stacy/src/test/java/edu/montana/csci/csci468/CatscriptTestBase.java: Recompile with -Xlint:unchecked for details.
 [INFO] 
 [INFO] --- maven-surefire-plugin:2.22.1:test (default-test) @ CSCI_466_Project ---
 [INFO] 
@@ -30,6 +34,69 @@
 [INFO]  T E S T S
 [INFO] -------------------------------------------------------
 [INFO] Running edu.montana.csci.csci468.bytecode.CatscriptStatementExecutionTest
+ JVM Bytecode ===================================
+
+// class version 49.0 (49)
+// access flags 0x1
+public class edu/montana/csci/csci466/bytecode/CatScriptProgram2 extends edu/montana/csci/csci468/parser/statements/CatScriptProgram {
+
+
+  // access flags 0x1
+  public <init>()V
+    ALOAD 0
+    INVOKESPECIAL edu/montana/csci/csci468/parser/statements/CatScriptProgram.<init> ()V
+    RETURN
+    MAXSTACK = 1
+    MAXLOCALS = 1
+
+  // access flags 0x1
+  public execute()V
+    NEW java/util/LinkedList
+    DUP
+    INVOKESPECIAL java/util/LinkedList.<init> ()V
+    DUP
+    LDC 1
+    INVOKESTATIC java/lang/Integer.valueOf (I)Ljava/lang/Integer;
+    INVOKEVIRTUAL java/util/LinkedList.add (Ljava/lang/Object;)Z
+    POP
+    DUP
+    LDC 2
+    INVOKESTATIC java/lang/Integer.valueOf (I)Ljava/lang/Integer;
+    INVOKEVIRTUAL java/util/LinkedList.add (Ljava/lang/Object;)Z
+    POP
+    DUP
+    LDC 3
+    INVOKESTATIC java/lang/Integer.valueOf (I)Ljava/lang/Integer;
+    INVOKEVIRTUAL java/util/LinkedList.add (Ljava/lang/Object;)Z
+    POP
+    INVOKEINTERFACE java/util/List.iterator ()Ljava/util/Iterator; (itf)
+    ASTORE 1
+   L0
+   FRAME FULL [edu/montana/csci/csci466/bytecode/CatScriptProgram2 java/util/Iterator] []
+    ALOAD 1
+    INVOKEINTERFACE java/util/Iterator.hasNext ()Z (itf)
+    IFEQ L1
+    ALOAD 1
+    INVOKEINTERFACE java/util/Iterator.next ()Ljava/lang/Object; (itf)
+    CHECKCAST java/lang/Integer
+    INVOKEVIRTUAL java/lang/Integer.intValue ()I
+    ISTORE 2
+    ILOAD 2
+    ISTORE 3
+    ALOAD 0
+    ILOAD 3
+    INVOKESTATIC java/lang/Integer.valueOf (I)Ljava/lang/Integer;
+    INVOKEVIRTUAL edu/montana/csci/csci468/parser/statements/CatScriptProgram.print (Ljava/lang/Object;)V
+    GOTO L0
+   L1
+   FRAME FULL [edu/montana/csci/csci466/bytecode/CatScriptProgram2 java/util/Iterator] []
+    RETURN
+    MAXSTACK = 3
+    MAXLOCALS = 4
+}
+
+
+ ================================================
  JVM Bytecode ===================================
 
 // class version 49.0 (49)
@@ -223,16 +290,12 @@ public class edu/montana/csci/csci466/bytecode/CatScriptProgram12 extends edu/mo
 
 
  ================================================
-[ERROR] Tests run: 9, Failures: 0, Errors: 7, Skipped: 0, Time elapsed: 0.12 s <<< FAILURE! - in edu.montana.csci.csci468.bytecode.CatscriptStatementExecutionTest
-[ERROR] recursiveFunctionWorksProperly  Time elapsed: 0.048 s  <<< ERROR!
+[ERROR] Tests run: 9, Failures: 0, Errors: 6, Skipped: 0, Time elapsed: 0.23 s <<< FAILURE! - in edu.montana.csci.csci468.bytecode.CatscriptStatementExecutionTest
+[ERROR] recursiveFunctionWorksProperly  Time elapsed: 0.095 s  <<< ERROR!
 java.lang.NegativeArraySizeException: -1
 	at edu.montana.csci.csci468.bytecode.CatscriptStatementExecutionTest.recursiveFunctionWorksProperly(CatscriptStatementExecutionTest.java:72)
 
-[ERROR] localVarStatementsWorkProperly  Time elapsed: 0.006 s  <<< ERROR!
-java.lang.ArrayIndexOutOfBoundsException: Index -1 out of bounds for length 0
-	at edu.montana.csci.csci468.bytecode.CatscriptStatementExecutionTest.localVarStatementsWorkProperly(CatscriptStatementExecutionTest.java:40)
-
-[ERROR] varStatementWorksProperly  Time elapsed: 0.029 s  <<< ERROR!
+[ERROR] varStatementWorksProperly  Time elapsed: 0.003 s  <<< ERROR!
 java.lang.IllegalArgumentException: 
 Error at instruction 6: Cannot pop operand off an empty stack. execute()V
 00000 R  :  :     ALOAD 0
@@ -251,7 +314,7 @@ Caused by: org.objectweb.asm.tree.analysis.AnalyzerException: Error at instructi
 Caused by: java.lang.IndexOutOfBoundsException: Cannot pop operand off an empty stack.
 	at edu.montana.csci.csci468.bytecode.CatscriptStatementExecutionTest.varStatementWorksProperly(CatscriptStatementExecutionTest.java:29)
 
-[ERROR] functionDeclarationWorksProperly  Time elapsed: 0.003 s  <<< ERROR!
+[ERROR] functionDeclarationWorksProperly  Time elapsed: 0.005 s  <<< ERROR!
 java.lang.IllegalArgumentException: 
 Error at instruction 0: Cannot pop operand off an empty stack. execute()V
 00000 R  :  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram4.foo (Ljava/lang/Object;)V
@@ -266,7 +329,7 @@ Caused by: org.objectweb.asm.tree.analysis.AnalyzerException: Error at instructi
 Caused by: java.lang.IndexOutOfBoundsException: Cannot pop operand off an empty stack.
 	at edu.montana.csci.csci468.bytecode.CatscriptStatementExecutionTest.functionDeclarationWorksProperly(CatscriptStatementExecutionTest.java:63)
 
-[ERROR] returnStatementWorks  Time elapsed: 0.002 s  <<< ERROR!
+[ERROR] returnStatementWorks  Time elapsed: 0.004 s  <<< ERROR!
 java.lang.IllegalArgumentException: 
 Error at instruction 1: Cannot pop operand off an empty stack. execute()V
 00000 R  :  :     ALOAD 0
@@ -282,7 +345,7 @@ Caused by: org.objectweb.asm.tree.analysis.AnalyzerException: Error at instructi
 Caused by: java.lang.IndexOutOfBoundsException: Cannot pop operand off an empty stack.
 	at edu.montana.csci.csci468.bytecode.CatscriptStatementExecutionTest.returnStatementWorks(CatscriptStatementExecutionTest.java:85)
 
-[ERROR] varInsideFunctionWorksProperly  Time elapsed: 0.001 s  <<< ERROR!
+[ERROR] varInsideFunctionWorksProperly  Time elapsed: 0.004 s  <<< ERROR!
 java.lang.IllegalArgumentException: 
 Error at instruction 3: Cannot pop operand off an empty stack. execute()V
 00000 R  :  :     ALOAD 0
@@ -298,7 +361,7 @@ Caused by: org.objectweb.asm.tree.analysis.AnalyzerException: Error at instructi
 Caused by: java.lang.IndexOutOfBoundsException: Cannot pop operand off an empty stack.
 	at edu.montana.csci.csci468.bytecode.CatscriptStatementExecutionTest.varInsideFunctionWorksProperly(CatscriptStatementExecutionTest.java:48)
 
-[ERROR] ifStatementWorksProperly  Time elapsed: 0.001 s  <<< ERROR!
+[ERROR] ifStatementWorksProperly  Time elapsed: 0.002 s  <<< ERROR!
 java.lang.NullPointerException
 	at edu.montana.csci.csci468.bytecode.CatscriptStatementExecutionTest.ifStatementWorksProperly(CatscriptStatementExecutionTest.java:21)
 
@@ -1051,17 +1114,12 @@ public class edu/montana/csci/csci466/bytecode/CatScriptProgram36 extends edu/mo
   // access flags 0x1
   public execute()V
     ALOAD 0
-    LDC 1
+    LDC 5
+    LDC 5
+    IMUL
     LDC 2
-    IF_ICMPLE L0
-    ICONST_1
-    GOTO L1
-   L0
-   FRAME FULL [edu/montana/csci/csci466/bytecode/CatScriptProgram36] [edu/montana/csci/csci466/bytecode/CatScriptProgram36]
-    ICONST_0
-   L1
-   FRAME FULL [edu/montana/csci/csci466/bytecode/CatScriptProgram36] [edu/montana/csci/csci466/bytecode/CatScriptProgram36 I]
-    INVOKESTATIC java/lang/Boolean.valueOf (Z)Ljava/lang/Boolean;
+    IADD
+    INVOKESTATIC java/lang/Integer.valueOf (I)Ljava/lang/Integer;
     INVOKEVIRTUAL edu/montana/csci/csci468/parser/statements/CatScriptProgram.print (Ljava/lang/Object;)V
     RETURN
     MAXSTACK = 3
@@ -1090,7 +1148,7 @@ public class edu/montana/csci/csci466/bytecode/CatScriptProgram37 extends edu/mo
     ALOAD 0
     LDC 1
     LDC 2
-    IF_ICMPLT L0
+    IF_ICMPLE L0
     ICONST_1
     GOTO L1
    L0
@@ -1127,7 +1185,7 @@ public class edu/montana/csci/csci466/bytecode/CatScriptProgram38 extends edu/mo
     ALOAD 0
     LDC 1
     LDC 2
-    IF_ICMPGT L0
+    IF_ICMPLT L0
     ICONST_1
     GOTO L1
    L0
@@ -1164,7 +1222,7 @@ public class edu/montana/csci/csci466/bytecode/CatScriptProgram39 extends edu/mo
     ALOAD 0
     LDC 1
     LDC 2
-    IF_ICMPGE L0
+    IF_ICMPGT L0
     ICONST_1
     GOTO L1
    L0
@@ -1199,9 +1257,9 @@ public class edu/montana/csci/csci466/bytecode/CatScriptProgram40 extends edu/mo
   // access flags 0x1
   public execute()V
     ALOAD 0
-    LDC 2
     LDC 1
-    IF_ICMPLE L0
+    LDC 2
+    IF_ICMPGE L0
     ICONST_1
     GOTO L1
    L0
@@ -1238,7 +1296,7 @@ public class edu/montana/csci/csci466/bytecode/CatScriptProgram41 extends edu/mo
     ALOAD 0
     LDC 2
     LDC 1
-    IF_ICMPLT L0
+    IF_ICMPLE L0
     ICONST_1
     GOTO L1
    L0
@@ -1275,7 +1333,7 @@ public class edu/montana/csci/csci466/bytecode/CatScriptProgram42 extends edu/mo
     ALOAD 0
     LDC 2
     LDC 1
-    IF_ICMPGT L0
+    IF_ICMPLT L0
     ICONST_1
     GOTO L1
    L0
@@ -1312,7 +1370,7 @@ public class edu/montana/csci/csci466/bytecode/CatScriptProgram43 extends edu/mo
     ALOAD 0
     LDC 2
     LDC 1
-    IF_ICMPGE L0
+    IF_ICMPGT L0
     ICONST_1
     GOTO L1
    L0
@@ -1347,9 +1405,9 @@ public class edu/montana/csci/csci466/bytecode/CatScriptProgram44 extends edu/mo
   // access flags 0x1
   public execute()V
     ALOAD 0
+    LDC 2
     LDC 1
-    LDC 1
-    IF_ICMPLE L0
+    IF_ICMPGE L0
     ICONST_1
     GOTO L1
    L0
@@ -1386,7 +1444,7 @@ public class edu/montana/csci/csci466/bytecode/CatScriptProgram45 extends edu/mo
     ALOAD 0
     LDC 1
     LDC 1
-    IF_ICMPLT L0
+    IF_ICMPLE L0
     ICONST_1
     GOTO L1
    L0
@@ -1423,7 +1481,7 @@ public class edu/montana/csci/csci466/bytecode/CatScriptProgram46 extends edu/mo
     ALOAD 0
     LDC 1
     LDC 1
-    IF_ICMPGT L0
+    IF_ICMPLT L0
     ICONST_1
     GOTO L1
    L0
@@ -1458,9 +1516,9 @@ public class edu/montana/csci/csci466/bytecode/CatScriptProgram47 extends edu/mo
   // access flags 0x1
   public execute()V
     ALOAD 0
-    LDC 2
     LDC 1
-    IF_ICMPGE L0
+    LDC 1
+    IF_ICMPGT L0
     ICONST_1
     GOTO L1
    L0
@@ -1477,13 +1535,50 @@ public class edu/montana/csci/csci466/bytecode/CatScriptProgram47 extends edu/mo
 
 
  ================================================
-[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.102 s - in edu.montana.csci.csci468.bytecode.CatscriptBasicExpressionCompileTest
+ JVM Bytecode ===================================
+
+// class version 49.0 (49)
+// access flags 0x1
+public class edu/montana/csci/csci466/bytecode/CatScriptProgram48 extends edu/montana/csci/csci468/parser/statements/CatScriptProgram {
+
+
+  // access flags 0x1
+  public <init>()V
+    ALOAD 0
+    INVOKESPECIAL edu/montana/csci/csci468/parser/statements/CatScriptProgram.<init> ()V
+    RETURN
+    MAXSTACK = 1
+    MAXLOCALS = 1
+
+  // access flags 0x1
+  public execute()V
+    ALOAD 0
+    LDC 2
+    LDC 1
+    IF_ICMPGE L0
+    ICONST_1
+    GOTO L1
+   L0
+   FRAME FULL [edu/montana/csci/csci466/bytecode/CatScriptProgram48] [edu/montana/csci/csci466/bytecode/CatScriptProgram48]
+    ICONST_0
+   L1
+   FRAME FULL [edu/montana/csci/csci466/bytecode/CatScriptProgram48] [edu/montana/csci/csci466/bytecode/CatScriptProgram48 I]
+    INVOKESTATIC java/lang/Boolean.valueOf (Z)Ljava/lang/Boolean;
+    INVOKEVIRTUAL edu/montana/csci/csci468/parser/statements/CatScriptProgram.print (Ljava/lang/Object;)V
+    RETURN
+    MAXSTACK = 3
+    MAXLOCALS = 1
+}
+
+
+ ================================================
+[INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.155 s - in edu.montana.csci.csci468.bytecode.CatscriptBasicExpressionCompileTest
 [INFO] Running edu.montana.csci.csci468.bytecode.CatscriptFunctionArgsAndReturnCompileTest
-[ERROR] Tests run: 15, Failures: 0, Errors: 15, Skipped: 0, Time elapsed: 0.002 s <<< FAILURE! - in edu.montana.csci.csci468.bytecode.CatscriptFunctionArgsAndReturnCompileTest
+[ERROR] Tests run: 15, Failures: 0, Errors: 15, Skipped: 0, Time elapsed: 0.003 s <<< FAILURE! - in edu.montana.csci.csci468.bytecode.CatscriptFunctionArgsAndReturnCompileTest
 [ERROR] listTypeWithComponentTypeArgWorksProperly  Time elapsed: 0 s  <<< ERROR!
 java.lang.IllegalArgumentException: 
 Error at instruction 0: Cannot pop operand off an empty stack. execute()V
-00000 R  :  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram48.foo (Ljava/lang/Object;)V
+00000 R  :  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram49.foo (Ljava/lang/Object;)V
 00001 ?  :     RETURN
 
 
@@ -1496,7 +1591,7 @@ Caused by: java.lang.IndexOutOfBoundsException: Cannot pop operand off an empty 
 [ERROR] stringTypeArgWorksProperly  Time elapsed: 0 s  <<< ERROR!
 java.lang.IllegalArgumentException: 
 Error at instruction 0: Cannot pop operand off an empty stack. execute()V
-00000 R  :  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram49.foo (Ljava/lang/Object;)V
+00000 R  :  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram50.foo (Ljava/lang/Object;)V
 00001 ?  :     RETURN
 
 
@@ -1509,7 +1604,7 @@ Caused by: java.lang.IndexOutOfBoundsException: Cannot pop operand off an empty 
 [ERROR] noTypeArgWorksProperly  Time elapsed: 0 s  <<< ERROR!
 java.lang.IllegalArgumentException: 
 Error at instruction 0: Cannot pop operand off an empty stack. execute()V
-00000 R  :  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram50.foo (Ljava/lang/Object;)V
+00000 R  :  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram51.foo (Ljava/lang/Object;)V
 00001 ?  :     RETURN
 
 
@@ -1522,7 +1617,7 @@ Caused by: java.lang.IndexOutOfBoundsException: Cannot pop operand off an empty 
 [ERROR] mutliArgumentFunctionsWork  Time elapsed: 0 s  <<< ERROR!
 java.lang.IllegalArgumentException: 
 Error at instruction 0: Cannot pop operand off an empty stack. execute()V
-00000 R  :  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram51.foo (Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V
+00000 R  :  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram52.foo (Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V
 00001 ?  :     RETURN
 
 
@@ -1536,7 +1631,7 @@ Caused by: java.lang.IndexOutOfBoundsException: Cannot pop operand off an empty 
 java.lang.IllegalArgumentException: 
 Error at instruction 3: Cannot pop operand off an empty stack. execute()V
 00000 R  :  :     ALOAD 0
-00001 R  : R  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram52.foo ()I
+00001 R  : R  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram53.foo ()I
 00002 R  : I  :     INVOKESTATIC java/lang/Boolean.valueOf (Z)Ljava/lang/Boolean;
 00003 R  : R  :     INVOKEVIRTUAL edu/montana/csci/csci468/parser/statements/CatScriptProgram.print (Ljava/lang/Object;)V
 00004 ?   :     RETURN
@@ -1552,11 +1647,11 @@ Caused by: java.lang.IndexOutOfBoundsException: Cannot pop operand off an empty 
 java.lang.NullPointerException
 	at edu.montana.csci.csci468.bytecode.CatscriptFunctionArgsAndReturnCompileTest.returnListWithComponentTypeWorksProperlyWithMultipleReturnOptions(CatscriptFunctionArgsAndReturnCompileTest.java:107)
 
-[ERROR] returnObjectWorksProperly  Time elapsed: 0.001 s  <<< ERROR!
+[ERROR] returnObjectWorksProperly  Time elapsed: 0 s  <<< ERROR!
 java.lang.IllegalArgumentException: 
 Error at instruction 2: Cannot pop operand off an empty stack. execute()V
 00000 R  :  :     ALOAD 0
-00001 R  : R  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram54.foo ()Ljava/lang/Object;
+00001 R  : R  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram55.foo ()Ljava/lang/Object;
 00002 R  : R  :     INVOKEVIRTUAL edu/montana/csci/csci468/parser/statements/CatScriptProgram.print (Ljava/lang/Object;)V
 00003 ?   :     RETURN
 
@@ -1567,11 +1662,11 @@ Caused by: org.objectweb.asm.tree.analysis.AnalyzerException: Error at instructi
 Caused by: java.lang.IndexOutOfBoundsException: Cannot pop operand off an empty stack.
 	at edu.montana.csci.csci468.bytecode.CatscriptFunctionArgsAndReturnCompileTest.returnObjectWorksProperly(CatscriptFunctionArgsAndReturnCompileTest.java:72)
 
-[ERROR] returnListWithComponentTypeWorksProperly  Time elapsed: 0 s  <<< ERROR!
+[ERROR] returnListWithComponentTypeWorksProperly  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.IllegalArgumentException: 
 Error at instruction 2: Cannot pop operand off an empty stack. execute()V
 00000 R  :  :     ALOAD 0
-00001 R  : R  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram55.foo ()Ljava/util/List;
+00001 R  : R  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram56.foo ()Ljava/util/List;
 00002 R  : R  :     INVOKEVIRTUAL edu/montana/csci/csci468/parser/statements/CatScriptProgram.print (Ljava/lang/Object;)V
 00003 ?   :     RETURN
 
@@ -1586,7 +1681,7 @@ Caused by: java.lang.IndexOutOfBoundsException: Cannot pop operand off an empty 
 java.lang.IllegalArgumentException: 
 Error at instruction 2: Cannot pop operand off an empty stack. execute()V
 00000 R  :  :     ALOAD 0
-00001 R  : R  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram56.foo ()Ljava/util/List;
+00001 R  : R  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram57.foo ()Ljava/util/List;
 00002 R  : R  :     INVOKEVIRTUAL edu/montana/csci/csci468/parser/statements/CatScriptProgram.print (Ljava/lang/Object;)V
 00003 ?   :     RETURN
 
@@ -1600,7 +1695,7 @@ Caused by: java.lang.IndexOutOfBoundsException: Cannot pop operand off an empty 
 [ERROR] objectTypeArgWorksProperly  Time elapsed: 0 s  <<< ERROR!
 java.lang.IllegalArgumentException: 
 Error at instruction 0: Cannot pop operand off an empty stack. execute()V
-00000 R  :  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram57.foo (Ljava/lang/Object;)V
+00000 R  :  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram58.foo (Ljava/lang/Object;)V
 00001 ?  :     RETURN
 
 
@@ -1615,10 +1710,10 @@ java.lang.IllegalArgumentException:
 Error at instruction 3: Cannot pop operand off an empty stack. execute()V
 00000 R  :  :     ALOAD 0
 00001 R  : R  :     LDC 10
-00002 R  : R I  :     PUTFIELD edu/montana/csci/csci466/bytecode/CatScriptProgram58.x : I
-00003 R  :  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram58.foo ()V
+00002 R  : R I  :     PUTFIELD edu/montana/csci/csci466/bytecode/CatScriptProgram59.x : I
+00003 R  :  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram59.foo ()V
 00004 ?    :     ALOAD 0
-00005 ?    :     GETFIELD edu/montana/csci/csci466/bytecode/CatScriptProgram58.x : I
+00005 ?    :     GETFIELD edu/montana/csci/csci466/bytecode/CatScriptProgram59.x : I
 00006 ?    :     INVOKESTATIC java/lang/Integer.valueOf (I)Ljava/lang/Integer;
 00007 ?    :     INVOKEVIRTUAL edu/montana/csci/csci468/parser/statements/CatScriptProgram.print (Ljava/lang/Object;)V
 00008 ?    :     RETURN
@@ -1633,7 +1728,7 @@ Caused by: java.lang.IndexOutOfBoundsException: Cannot pop operand off an empty 
 [ERROR] listTypeArgWorksProperly  Time elapsed: 0 s  <<< ERROR!
 java.lang.IllegalArgumentException: 
 Error at instruction 0: Cannot pop operand off an empty stack. execute()V
-00000 R  :  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram59.foo (Ljava/lang/Object;)V
+00000 R  :  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram60.foo (Ljava/lang/Object;)V
 00001 ?  :     RETURN
 
 
@@ -1646,7 +1741,7 @@ Caused by: java.lang.IndexOutOfBoundsException: Cannot pop operand off an empty 
 [ERROR] intTypeArgWorksProperly  Time elapsed: 0 s  <<< ERROR!
 java.lang.IllegalArgumentException: 
 Error at instruction 0: Cannot pop operand off an empty stack. execute()V
-00000 R  :  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram60.foo (I)V
+00000 R  :  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram61.foo (I)V
 00001 ?  :     RETURN
 
 
@@ -1659,7 +1754,7 @@ Caused by: java.lang.IndexOutOfBoundsException: Cannot pop operand off an empty 
 [ERROR] booleanTypeArgWorksProperly  Time elapsed: 0.001 s  <<< ERROR!
 java.lang.IllegalArgumentException: 
 Error at instruction 0: Cannot pop operand off an empty stack. execute()V
-00000 R  :  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram61.foo (I)V
+00000 R  :  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram62.foo (I)V
 00001 ?  :     RETURN
 
 
@@ -1673,7 +1768,7 @@ Caused by: java.lang.IndexOutOfBoundsException: Cannot pop operand off an empty 
 java.lang.IllegalArgumentException: 
 Error at instruction 3: Cannot pop operand off an empty stack. execute()V
 00000 R  :  :     ALOAD 0
-00001 R  : R  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram62.foo ()I
+00001 R  : R  :     INVOKEVIRTUAL edu/montana/csci/csci466/bytecode/CatScriptProgram63.foo ()I
 00002 R  : I  :     INVOKESTATIC java/lang/Integer.valueOf (I)Ljava/lang/Integer;
 00003 R  : R  :     INVOKEVIRTUAL edu/montana/csci/csci468/parser/statements/CatScriptProgram.print (Ljava/lang/Object;)V
 00004 ?   :     RETURN
@@ -1706,19 +1801,18 @@ Caused by: java.lang.IndexOutOfBoundsException: Cannot pop operand off an empty 
 [ERROR]   CatscriptFunctionArgsAndReturnCompileTest.voidFunctionWorksProperly:12->CatscriptTestBase.compile:121 » IllegalArgument
 [ERROR]   CatscriptStatementExecutionTest.functionDeclarationWorksProperly:63->CatscriptTestBase.compile:121 » IllegalArgument
 [ERROR]   CatscriptStatementExecutionTest.ifStatementWorksProperly:21->CatscriptTestBase.compile:121 » NullPointer
-[ERROR]   CatscriptStatementExecutionTest.localVarStatementsWorkProperly:40->CatscriptTestBase.compile:121 » ArrayIndexOutOfBounds
 [ERROR]   CatscriptStatementExecutionTest.recursiveFunctionWorksProperly:72->CatscriptTestBase.compile:121 » NegativeArraySize
 [ERROR]   CatscriptStatementExecutionTest.returnStatementWorks:85->CatscriptTestBase.compile:121 » IllegalArgument
 [ERROR]   CatscriptStatementExecutionTest.varInsideFunctionWorksProperly:48->CatscriptTestBase.compile:121 » IllegalArgument
 [ERROR]   CatscriptStatementExecutionTest.varStatementWorksProperly:29->CatscriptTestBase.compile:121 » IllegalArgument
 [INFO] 
-[ERROR] Tests run: 32, Failures: 0, Errors: 22, Skipped: 0
+[ERROR] Tests run: 33, Failures: 0, Errors: 21, Skipped: 0
 [INFO] 
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  3.419 s
-[INFO] Finished at: 2021-04-22T09:48:23-06:00
+[INFO] Total time:  7.708 s
+[INFO] Finished at: 2021-04-23T12:01:06-06:00
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.22.1:test (default-test) on project CSCI_466_Project: There are test failures.
 [ERROR] 
