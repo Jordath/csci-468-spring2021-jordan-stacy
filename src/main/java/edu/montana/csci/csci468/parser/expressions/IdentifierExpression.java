@@ -6,6 +6,7 @@ import edu.montana.csci.csci468.parser.CatscriptType;
 import edu.montana.csci.csci468.parser.ErrorType;
 import edu.montana.csci.csci468.parser.ParseError;
 import edu.montana.csci.csci468.parser.SymbolTable;
+import edu.montana.csci.csci468.parser.statements.CatScriptProgram;
 import org.objectweb.asm.Opcodes;
 
 public class IdentifierExpression extends Expression {
@@ -18,6 +19,10 @@ public class IdentifierExpression extends Expression {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isGlobal() {
+        return getParent() instanceof CatScriptProgram;
     }
 
     @Override
@@ -52,6 +57,8 @@ public class IdentifierExpression extends Expression {
 
     @Override
     public void compile(ByteCodeGenerator code) {
+
+        //code.addVarInstruction(Opcodes.ALOAD, 0);
         Integer integer = code.resolveLocalStorageSlotFor(getName());
         if(integer != null){
             code.addVarInstruction(Opcodes.ILOAD, integer);

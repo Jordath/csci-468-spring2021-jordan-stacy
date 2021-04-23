@@ -164,6 +164,8 @@ public class FunctionDefinitionStatement extends Statement {
         }
         // invoke virtual
         //code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, internalNameFor(CatScriptProgram.class), getName(), );
+        code.addInstruction(Opcodes.RETURN);
         code.popMethod();
+
     }
 }

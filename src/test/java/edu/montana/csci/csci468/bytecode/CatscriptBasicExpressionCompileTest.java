@@ -43,6 +43,14 @@ public class CatscriptBasicExpressionCompileTest extends CatscriptTestBase {
         assertEquals("anull\n", compile("\"a\" + null"));
     }
 
+
+    //----------------------------------------------
+    // Anthony's test
+    @Test
+    void parenthesizedExpressionWithAdditionCompilesProperly(){
+        assertEquals("27\n", compile("(5*5)+2"));
+    }
+
     @Test
     void comparisonExpressionCompilesProperly() {
         assertEquals("false\n", compile("1 > 2"));

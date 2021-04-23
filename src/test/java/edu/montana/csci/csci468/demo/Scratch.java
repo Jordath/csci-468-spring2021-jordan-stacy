@@ -57,11 +57,11 @@ public class Scratch {
 //            print(2);
 //        }
 
-//        foo(1);
-//        foo(2);
-//        foo(3);
+        foo(1);
+        foo(2);
+        foo(3);
 
-        System.out.println(x);
+//        System.out.println(x);
 
 
 
@@ -74,13 +74,13 @@ public class Scratch {
 //        return i < j;
 //    }
 //
-//    void print(Object i){
-//        System.out.println(i);
-//    }
-//
-//    void foo(Object i){
-//        print(i);
-//    }
+    void print(Object i){
+        System.out.println(i);
+    }
+
+    void foo(Object i){
+        print(i);
+    }
 //
 //    boolean greater(int i, int j){
 //        return i > j;

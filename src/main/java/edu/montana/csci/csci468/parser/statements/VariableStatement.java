@@ -84,6 +84,7 @@ public class VariableStatement extends Statement {
 
     @Override
     public void compile(ByteCodeGenerator code) {
+
         if(isGlobal()){
             code.addVarInstruction(Opcodes.ALOAD, 0);
             if(getExpression().getType() == CatscriptType.INT || getExpression().getType() == CatscriptType.BOOLEAN) {
@@ -92,6 +93,7 @@ public class VariableStatement extends Statement {
                 //code.addFieldInstruction(Opcodes.ISTORE, variableName, "I", code.getProgramInternalName());
                 code.addFieldInstruction(Opcodes.PUTFIELD, variableName, "I", code.getProgramInternalName());
                 //code.addInstruction(Opcodes.RETURN);
+
             }
             else {
                 expression.compile(code);
@@ -111,9 +113,11 @@ public class VariableStatement extends Statement {
         if(!isGlobal()) {
             Integer localStorageSlotForVariable = code.createLocalStorageSlotFor(variableName);
             if(getExpression().getType() == CatscriptType.INT || getExpression().getType() == CatscriptType.BOOLEAN) {
+                expression.compile(code);
                 code.addVarInstruction(Opcodes.ISTORE, localStorageSlotForVariable);
             }
             else{
+                expression.compile(code);
                 code.addVarInstruction(Opcodes.ASTORE, localStorageSlotForVariable);
             }
         }

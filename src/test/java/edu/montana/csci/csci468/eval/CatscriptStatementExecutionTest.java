@@ -19,6 +19,30 @@ public class CatscriptStatementExecutionTest extends CatscriptTestBase {
         assertEquals("[1, 2, 3]\n", executeProgram("print([1, 2, 3])"));
     }
 
+    //-----------------------------------------------
+    // These tests will be placed in CatscriptStatementExecutionTest.java
+    @Test
+    void printStatementWithNullWorksProperly() {
+        assertEquals("null\n", executeProgram("print(null)"));
+    }
+
+    // -------------------------------------------------
+    // Anthony's test
+    @Test
+    void ifStatementWithNullWorksProperly(){
+        assertEquals("null\n", executeProgram("if(true){ print(null) }"));
+    }
+
+
+
+    // ----------------------------------------------------
+    @Test
+    void ifStatementWithVariableWorksProperly() {
+        assertEquals("Cannot legally drink\n", executeProgram("var x = 18 if(x < 21){ print(\"Cannot legally drink\") } " +
+                "else { print(\"Can legally drink\") }"));
+    }
+
+
     @Test
     void ifStatementWorksProperly() {
         assertEquals("1\n", executeProgram("if(true){ print(1) }"));

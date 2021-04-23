@@ -31,6 +31,21 @@ public class CatscriptBasicExpressionEvalTest extends CatscriptTestBase {
         assertEquals(4, evaluateExpression("2 * 4 / 2"));
     }
 
+    // --------------------------------------------------
+    // This test will be placed in CatscriptBasicExpressionEvalTest.java
+    @Test
+    void factorAndAdditiveExpressionEvaluatesProperly() {
+        assertEquals(2, evaluateExpression("1 * 2 + 2 - 2"));
+    }
+
+
+    // ----------------------------------------------
+    // Anthony's test
+    @Test
+    void parenthesizedExpressionWithAdditionEvaluatesProperly(){
+        assertEquals(27, evaluateExpression("(5*5)+2"));
+    }
+
     @Test
     void additiveExpressionEvaluatesProperly() {
         assertEquals(2, evaluateExpression("1 + 1"));
