@@ -161,9 +161,12 @@ public class FunctionDefinitionStatement extends Statement {
         code.addVarInstruction(Opcodes.ALOAD, 0);
         for (Statement statement : body) {
             statement.compile(code);
+            //box(code, getType());
         }
         // invoke virtual
-        //code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, internalNameFor(CatScriptProgram.class), getName(), );
+
+        code.addMethodInstruction(Opcodes.INVOKESTATIC, internalNameFor(CatScriptProgram.class), getName(),getDescriptor());
+        //code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, internalNameFor(CatScriptProgram.class), getName(), getDescriptor());
         code.addInstruction(Opcodes.RETURN);
         code.popMethod();
 
