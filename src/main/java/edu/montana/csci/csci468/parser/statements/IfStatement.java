@@ -102,10 +102,9 @@ public class IfStatement extends Statement {
         expression.compile(code);
         Label end = new Label();
         Label elseLabel = new Label();
-        if(trueStatements.size() > 0){
+        if(elseStatements.size() > 0){
             code.addJumpInstruction(Opcodes.IFEQ, elseLabel);
-        }
-        else{
+        } else{
             code.addJumpInstruction(Opcodes.IFEQ, end);
         }
         for (Statement trueStatement : trueStatements) {
@@ -114,7 +113,7 @@ public class IfStatement extends Statement {
         }
         code.addJumpInstruction(Opcodes.GOTO, end);
         if(elseStatements.size() > 0){
-            // something
+            code.addLabel(elseLabel);
             for (Statement elseStatement : elseStatements) {
                 elseStatement.compile(code);
                 // something else
