@@ -62,8 +62,12 @@ public class IdentifierExpression extends Expression {
         Integer integer = code.resolveLocalStorageSlotFor(getName());
         if(integer != null){
             code.addVarInstruction(Opcodes.ILOAD, integer);
+
+
         }
         else {
+            code.addVarInstruction(Opcodes.ALOAD, 0);
+
             if(type == CatscriptType.INT || type == CatscriptType.BOOLEAN) {
                 code.addFieldInstruction(Opcodes.GETFIELD, name, "I",
                         code.getProgramInternalName());

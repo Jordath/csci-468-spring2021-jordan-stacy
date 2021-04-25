@@ -52,12 +52,13 @@ public class FunctionCallStatement extends Statement {
         code.addVarInstruction(Opcodes.ALOAD, 0);
         for (Expression argument : expression.getArguments()) {
             //code.pushConstantOntoStack(argument);
-            //argument.compile(code);
-            if(argument.getType() == CatscriptType.OBJECT){
-                box(code, argument.getType());
-            }
+//            //argument.compile(code);
+//            if(argument.getType() == CatscriptType.OBJECT){
+//                box(code, argument.getType());
+//            }
 
         }
+        //expression.compile(code);
 
 //        code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, internalNameFor(CatScriptProgram.class), getName(),
 //                "(Ljava/lang/Object;)V);");

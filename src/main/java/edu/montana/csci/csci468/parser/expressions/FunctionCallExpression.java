@@ -89,6 +89,9 @@ public class FunctionCallExpression extends Expression {
         // push the this pointer for the current program
         for (Expression argument : arguments) {
             argument.compile(code);
+            if(argument.getType() == CatscriptType.OBJECT){
+                box(code, argument.getType());
+            }
         }
         code.addMethodInstruction(Opcodes.INVOKEVIRTUAL, code.getProgramInternalName(),
                 name, func.getDescriptor());

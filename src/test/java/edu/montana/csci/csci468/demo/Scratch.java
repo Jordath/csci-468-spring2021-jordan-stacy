@@ -50,16 +50,19 @@ public class Scratch {
 //        for(Integer integer : integers){
 //            System.out.println(integer);
 //        }
-//        if(true){
-//            print(1);
-//        }
-//        else{
-//            print(2);
-//        }
 
-        foo(1);
-        foo(2);
-        foo(3);
+        boolean trueVal = true;
+
+        if(trueVal == true){
+            print(1);
+        }
+        else{
+            print(2);
+        }
+
+//        foo(1);
+//        foo(2);
+//        foo(3);
 
 //        System.out.println(x);
 
