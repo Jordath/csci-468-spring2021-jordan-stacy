@@ -44,12 +44,12 @@ public class CatscriptBasicExpressionCompileTest extends CatscriptTestBase {
     }
 
 
-    //----------------------------------------------
-    // Anthony's test
-    @Test
-    void parenthesizedExpressionWithAdditionCompilesProperly(){
-        assertEquals("27\n", compile("(5*5)+2"));
-    }
+//    //----------------------------------------------
+//    // Anthony's test
+//    @Test
+//    void parenthesizedExpressionWithAdditionCompilesProperly(){
+//        assertEquals("27\n", compile("(5*5)+2"));
+//    }
 
     @Test
     void comparisonExpressionCompilesProperly() {
