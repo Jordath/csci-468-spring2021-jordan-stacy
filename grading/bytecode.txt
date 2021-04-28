@@ -584,12 +584,12 @@ public class edu/montana/csci/csci466/bytecode/CatScriptProgram17 extends edu/mo
 
 
  ================================================
-[ERROR] Tests run: 9, Failures: 1, Errors: 3, Skipped: 0, Time elapsed: 0.162 s <<< FAILURE! - in edu.montana.csci.csci468.bytecode.CatscriptStatementExecutionTest
-[ERROR] recursiveFunctionWorksProperly  Time elapsed: 0.05 s  <<< ERROR!
+[ERROR] Tests run: 9, Failures: 1, Errors: 3, Skipped: 0, Time elapsed: 0.137 s <<< FAILURE! - in edu.montana.csci.csci468.bytecode.CatscriptStatementExecutionTest
+[ERROR] recursiveFunctionWorksProperly  Time elapsed: 0.048 s  <<< ERROR!
 java.lang.ArrayIndexOutOfBoundsException: Index 1 out of bounds for length 1
 	at edu.montana.csci.csci468.bytecode.CatscriptStatementExecutionTest.recursiveFunctionWorksProperly(CatscriptStatementExecutionTest.java:72)
 
-[ERROR] functionDeclarationWorksProperly  Time elapsed: 0.004 s  <<< FAILURE!
+[ERROR] functionDeclarationWorksProperly  Time elapsed: 0.003 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: 
 expected: <1
 2
@@ -597,7 +597,7 @@ expected: <1
 > but was: <>
 	at edu.montana.csci.csci468.bytecode.CatscriptStatementExecutionTest.functionDeclarationWorksProperly(CatscriptStatementExecutionTest.java:63)
 
-[ERROR] returnStatementWorks  Time elapsed: 0.001 s  <<< ERROR!
+[ERROR] returnStatementWorks  Time elapsed: 0 s  <<< ERROR!
 java.lang.IllegalArgumentException: 
 Error at instruction 1: Argument 1: expected I, but found R foo(I)I
 00000 R I  :  :     ALOAD 0
@@ -1802,7 +1802,7 @@ public class edu/montana/csci/csci466/bytecode/CatScriptProgram52 extends edu/mo
 
 
  ================================================
-[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.102 s - in edu.montana.csci.csci468.bytecode.CatscriptBasicExpressionCompileTest
+[INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.101 s - in edu.montana.csci.csci468.bytecode.CatscriptBasicExpressionCompileTest
 [INFO] Running edu.montana.csci.csci468.bytecode.CatscriptFunctionArgsAndReturnCompileTest
  JVM Bytecode ===================================
 
@@ -2033,7 +2033,7 @@ public class edu/montana/csci/csci466/bytecode/CatScriptProgram64 extends edu/mo
 
 
  ================================================
-[ERROR] Tests run: 15, Failures: 5, Errors: 9, Skipped: 0, Time elapsed: 0.02 s <<< FAILURE! - in edu.montana.csci.csci468.bytecode.CatscriptFunctionArgsAndReturnCompileTest
+[ERROR] Tests run: 15, Failures: 5, Errors: 9, Skipped: 0, Time elapsed: 0.014 s <<< FAILURE! - in edu.montana.csci.csci468.bytecode.CatscriptFunctionArgsAndReturnCompileTest
 [ERROR] listTypeWithComponentTypeArgWorksProperly  Time elapsed: 0.002 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: 
 expected: <[1, 2, 3]
@@ -2052,7 +2052,7 @@ expected: <1
 > but was: <>
 	at edu.montana.csci.csci468.bytecode.CatscriptFunctionArgsAndReturnCompileTest.noTypeArgWorksProperly(CatscriptFunctionArgsAndReturnCompileTest.java:20)
 
-[ERROR] mutliArgumentFunctionsWork  Time elapsed: 0.001 s  <<< ERROR!
+[ERROR] mutliArgumentFunctionsWork  Time elapsed: 0 s  <<< ERROR!
 java.lang.IllegalArgumentException: 
 Error at instruction 5: Cannot pop operand off an empty stack. foo(Ljava/lang/Object;Ljava/lang/Object;Ljava/lang/Object;)V
 00000 R R R R  :  :     ALOAD 0
@@ -2145,13 +2145,13 @@ Caused by: org.objectweb.asm.tree.analysis.AnalyzerException: Error at instructi
 Caused by: org.objectweb.asm.tree.analysis.AnalyzerException: Incompatible return type
 	at edu.montana.csci.csci468.bytecode.CatscriptFunctionArgsAndReturnCompileTest.returnListWorksProperly(CatscriptFunctionArgsAndReturnCompileTest.java:94)
 
-[ERROR] objectTypeArgWorksProperly  Time elapsed: 0.003 s  <<< FAILURE!
+[ERROR] objectTypeArgWorksProperly  Time elapsed: 0.002 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: 
 expected: <1
 > but was: <>
 	at edu.montana.csci.csci468.bytecode.CatscriptFunctionArgsAndReturnCompileTest.objectTypeArgWorksProperly(CatscriptFunctionArgsAndReturnCompileTest.java:26)
 
-[ERROR] listTypeArgWorksProperly  Time elapsed: 0.004 s  <<< FAILURE!
+[ERROR] listTypeArgWorksProperly  Time elapsed: 0.002 s  <<< FAILURE!
 org.opentest4j.AssertionFailedError: 
 expected: <[1, 2, 3]
 > but was: <>
@@ -2195,7 +2195,7 @@ Caused by: org.objectweb.asm.tree.analysis.AnalyzerException: Error at instructi
 Caused by: org.objectweb.asm.tree.analysis.AnalyzerException: Argument 1: expected I, but found R
 	at edu.montana.csci.csci468.bytecode.CatscriptFunctionArgsAndReturnCompileTest.booleanTypeArgWorksProperly(CatscriptFunctionArgsAndReturnCompileTest.java:38)
 
-[ERROR] returnIntWorksProperly  Time elapsed: 0.001 s  <<< ERROR!
+[ERROR] returnIntWorksProperly  Time elapsed: 0 s  <<< ERROR!
 java.lang.IllegalArgumentException: 
 Error at instruction 2: Incompatible return type foo()I
 00000 R  :  :     ALOAD 0
@@ -2246,8 +2246,8 @@ Caused by: org.objectweb.asm.tree.analysis.AnalyzerException: Incompatible retur
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
 [INFO] ------------------------------------------------------------------------
-[INFO] Total time:  5.252 s
-[INFO] Finished at: 2021-04-27T10:37:44-06:00
+[INFO] Total time:  4.594 s
+[INFO] Finished at: 2021-04-28T13:54:34-06:00
 [INFO] ------------------------------------------------------------------------
 [ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.22.1:test (default-test) on project CSCI_466_Project: There are test failures.
 [ERROR] 
