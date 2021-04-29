@@ -1,4 +1,4 @@
 Errors:
 
 - Missing source zip
-- Missing Jordan_Stacy_portfolio.pdf
+- Missing jordan_stacy_portfolio.pdf
